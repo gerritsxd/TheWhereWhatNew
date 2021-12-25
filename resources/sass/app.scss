@@ -1,0 +1,15 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+#googleMap {
+  width: 100vw;
+  height: 93vh;
+  max-width: 100%;
+  max-height: 100%;
+}
