@@ -316,7 +316,12 @@
 
             var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
             map.addListener('click', function(e) {
+                @auth
                 placeMarker(e.latLng, map);
+                @endauth
+                @guest
+                    window.alert("Please login to add event");
+                @endguest
             });
 
             function placeMarker(position, map) {
