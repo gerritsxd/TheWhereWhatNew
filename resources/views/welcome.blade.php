@@ -16,7 +16,7 @@
                 center:new google.maps.LatLng(52.364061,4.882769),
                 zoom:14,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
-                disableDefaultUI: false,
+                disableDefaultUI: true,
                 styles:
                     [
                         {
@@ -320,7 +320,8 @@
             });
 
             function placeMarker(position, map) {
-                var bubbletext = prompt("Please enter your name", "TEO");
+                var bubbletext = window.prompt("Please enter your name", "TEO");
+
 
                 var zoomLevel = map.getZoom()+'';
                 marker = new google.maps.Marker({
@@ -337,7 +338,7 @@
                 var zoom = map.getZoom();
                 markerWidth = (zoom/9)*34
                 markerHeight = (zoom/9)*34
-                alert(zoom)
+
 
                 //set the icon with the new size to the marker
                 marker.setIcon({

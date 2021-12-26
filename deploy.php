@@ -10,7 +10,8 @@ set('application', 'the_where_what');
 set('repository', 'https://github.com/gerritsxd/TheWhereWhatNew.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true); 
+set('git_tty', true);
+set('writable_use_sudo', true);
 
 // Shared files/dirs between deploys 
 add('shared_files', []);
@@ -20,10 +21,12 @@ add('shared_dirs', []);
 add('writable_dirs', []);
 
 
+
 // Hosts
 
 host('thewherewhat.com')
-    ->set('deploy_path', '/var/www/html');
+    ->user('deployer')
+    ->set('deploy_path', '/var/www/thewherewhat');
     
 // Tasks
 
