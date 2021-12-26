@@ -15,8 +15,9 @@ class CreateBubblesTable extends Migration
     {
         Schema::create('bubbles', function (Blueprint $table) {
             $table->id();
+            $table->integer('userid');
             $table->integer('bubble_type');
-            $table->integer('text');
+            $table->string('text');
             $table->double('longitude');
             $table->double('latitude');
             $table->integer('upvotes')->nullable();

@@ -8,9 +8,11 @@
 
 @section('scripts')
         <script>
-        function myMap() {
+            var map;
+        var myMap = function myMap() {
             var location = {lat: 52.363953, lng: 4.882714};
             var marker;
+
 
             var mapProp= {
                 center:new google.maps.LatLng(52.364061,4.882769),
@@ -314,7 +316,7 @@
             };
 
 
-            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
             map.addListener('click', function(e) {
                 @auth
                 placeMarker(e.latLng, map);
@@ -337,6 +339,7 @@
                     map: map
                 });
                 map.panTo(position);
+                saveMarker(bubbletext,position.lng,position.lat)
             }
             google.maps.event.addListener(map, 'zoom_changed', function() {
 
@@ -355,9 +358,47 @@
 
 
         }
+        function addMarker(text,position){
+
+            marker = new google.maps.Marker({
+                position: position,
+                icon: 'img/minibubble.png',
+                iconAnchor: new google.maps.Point(255.498,-26.204),
+                label: { color: '#FF0000', fontWeight: 'bold', fontSize: '14' , text: text},
+                map: map
+            });
+        }
+
+        function saveMarker(text,lat,long) {
+            var userid = {{Auth::id()}};
+            $.ajax({
+                url: '/addbubble/',
+                type: "GET",
+                dataType: "json",
+                data : { userid: userid, text : text, lat : lat, long:long },
+                success: function (data) {
+
+
+
+                     }
+            });
+        }
+
+        jQuery(document).ready(function () {
+
+            $.getJSON('/getbubbles', function(data) {
+                $.each(data, function(index) {
+
+                    var position = new google.maps.LatLng(data[index].longitude, data[index].latitude);
+                    addMarker(data[index].text,position)
+                });
+            });
+        })
+
+
 
 
     </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0&callback=myMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0&callback=myMap"></script>
 
 @stop

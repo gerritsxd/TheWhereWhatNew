@@ -20,3 +20,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/addbubble/', [App\Http\Controllers\BubbleController::class, 'addBubble']);
+Route::get('/getbubbles/', [App\Http\Controllers\BubbleController::class, 'getBubbles']);

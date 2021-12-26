@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBubbleRequest;
 use App\Http\Requests\UpdateBubbleRequest;
 use App\Models\Bubble;
+use Illuminate\Http\Request;
+
 
 class BubbleController extends Controller
 {
@@ -82,5 +84,29 @@ class BubbleController extends Controller
     public function destroy(Bubble $bubble)
     {
         //
+    }
+
+    public function addBubble(Request $request){
+
+        $bubble = new Bubble();
+
+       $bubble->userid = $request->get('userid');
+        $bubble->longitude = $request->get('long');
+        $bubble->latitude = $request->get('lat');
+        $bubble->text = $request->get('text');
+
+        $bubble->bubble_type = 1;
+        $bubble->save();
+
+        return ('SUCCESS');
+
+
+
+
+    }
+
+    public function getBubbles(){
+        $bubbles = Bubble::all();
+        return $bubbles;
     }
 }
