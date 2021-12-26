@@ -358,7 +358,9 @@
         }
 
         function saveMarker(text,lat,long) {
+            @auth
             var userid = {{Auth::id()}};
+            @endauth
             $.ajax({
                 url: '/addbubble/',
                 type: "GET",
