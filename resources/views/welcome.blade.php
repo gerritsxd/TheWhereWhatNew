@@ -341,19 +341,7 @@
                 map.panTo(position);
                 saveMarker(bubbletext,position.lng,position.lat)
             }
-            google.maps.event.addListener(map, 'zoom_changed', function() {
 
-                var zoom = map.getZoom();
-                markerWidth = (zoom/9)*34
-                markerHeight = (zoom/9)*34
-
-
-                //set the icon with the new size to the marker
-                marker.setIcon({
-                    url: 'img/minibubble.png',
-                    scaledSize: new google.maps.Size(markerWidth, markerHeight)
-                });
-            });
 
 
 
@@ -399,6 +387,6 @@
 
 
     </script>
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0&callback=myMap"></script>
+
 
 @stop
