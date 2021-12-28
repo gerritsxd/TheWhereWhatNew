@@ -17,6 +17,7 @@
                     zoom:14,
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     disableDefaultUI: true,
+                    gestureHandling: "greedy",
                     styles:
                         [
                             {
@@ -331,7 +332,7 @@
                 var zoomLevel = map.getZoom()+'';
                 marker = new google.maps.Marker({
                     position: position,
-                    icon: 'img/minibubble.png',
+                    icon: 'img/bubble.svg',
                     iconAnchor: new google.maps.Point(255.498,-26.204),
                     label: { color: '#FF0000', fontWeight: 'bold', fontSize: zoomLevel , text: bubbletext},
                     map: map
