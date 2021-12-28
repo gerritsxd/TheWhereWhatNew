@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0&callback=myMap"></script>
+    <link rel="manifest" href="{{ url('manifest.json') }}">
 </head>
 <body>
     <div id="app">
@@ -84,4 +84,6 @@
     </div>
     @yield('scripts')
 </body>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0&callback=myMap"></script>
+
 </html>

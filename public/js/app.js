@@ -5302,6 +5302,8 @@ var app = new Vue({
   el: '#app'
 });
 
+__webpack_require__(/*! ./sw.js */ "./resources/js/sw.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -5337,6 +5339,29 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/sw.js":
+/*!****************************!*\
+  !*** ./resources/js/sw.js ***!
+  \****************************/
+/***/ (() => {
+
+/**
+ * Created by Gerrit on 28/12/2021.
+ */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/serviceworker.js', {
+    scope: '.'
+  }).then(function (registration) {
+    // Registration was successful
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  }, function (err) {
+    // registration failed :(
+    console.log('ServiceWorker registration failed: ', err);
+  });
+}
 
 /***/ }),
 
