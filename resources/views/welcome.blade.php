@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div id="googleMap"></div>
 
 
@@ -9,6 +10,9 @@
 @section('scripts')
         <script>
             var map;
+            var infowindow;
+            var markers=[];
+
             var myMap = function myMap() {
                 var location = {lat: 52.363953, lng: 4.882714};
                 var marker;
@@ -325,6 +329,7 @@
                     @endguest
                 });
                 addWhereAmIbutton();
+                infowindow = new google.maps.InfoWindow();
 
 
 
@@ -347,15 +352,26 @@
                 map.panTo(position);
                 saveMarker(bubbletext,position.lng,position.lat)
             }
-            function addMarker(text,position){
-
+            function addMarker(id,text,position){
+                if (!markers.includes(id)){
+                markers.push(id);
                 marker = new google.maps.Marker({
                     position: position,
-                    icon: 'img/minibubble.png',
-                    iconAnchor: new google.maps.Point(255.498,-26.204),
+                    icon: 'img/bubble.svg',
+                    iconAnchor: new google.maps.Point(0,-60),
+
                     label: { color: '#FF0000', fontWeight: 'bold', fontSize: '14' , text: text},
                     map: map
                 });
+                    marker.addListener('mouseover', function() {
+                        infowindow.open(map, marker);
+                        infowindow.setPosition(position)
+                        infowindow.setContent("<div class='infowindow-container'>" +
+                            "<div class='inner'><h4>" + text +
+                            "</h4><p>Rating: " + 5 + "</p><p>Total reviews: " + 5 + "</p></div></div>");
+
+                    });
+                }
             }
             function addWhereAmIbutton(){
                 infoWindow = new google.maps.InfoWindow();
@@ -413,14 +429,19 @@
             }
 
             jQuery(document).ready(function () {
+                loadMarkers();
+                setInterval(function(){
+                    loadMarkers()
+                }, 1000);
 
-                $.getJSON('/getbubbles', function(data) {
-                    $.each(data, function(index) {
-
-                        var position = new google.maps.LatLng(data[index].longitude, data[index].latitude);
-                        addMarker(data[index].text,position)
+                function loadMarkers(){
+                    $.getJSON('/getbubbles', function(data) {
+                        $.each(data, function(index) {
+                            var position = new google.maps.LatLng(data[index].longitude, data[index].latitude);
+                            addMarker(data[index].id,data[index].text,position)
+                        });
                     });
-                });
+                }
             })
 
 
