@@ -338,7 +338,7 @@
 
             }
             function placeMarker(position, map) {
-                var bubbletext = window.prompt("Please enter your name", "TEO");
+                var bubbletext = window.prompt("Que pasa aqui?", "__");
 
 
                 var zoomLevel = map.getZoom()+'';
@@ -352,12 +352,17 @@
                 map.panTo(position);
                 saveMarker(bubbletext,position.lng,position.lat)
             }
-            function addMarker(id,text,position){
+            function addMarker(id,text,position,updated_at){
                 if (!markers.includes(id)){
                 markers.push(id);
+                    var seconds = Math.floor((new Date() -  new Date(updated_at).getTime()) / 1000);
+                    interval = seconds / 3600; //hours
+                    opacity = 1 / interval;
+                opacity =
                 marker = new google.maps.Marker({
                     position: position,
                     icon: 'img/bubble.svg',
+                    opacity: opacity,
                     iconAnchor: new google.maps.Point(0,-60),
 
                     label: { color: '#FF0000', fontWeight: 'bold', fontSize: '14' , text: text},
@@ -368,7 +373,7 @@
                         infowindow.setPosition(position)
                         infowindow.setContent("<div class='infowindow-container'>" +
                             "<div class='inner'><h4>" + text +
-                            "</h4><p>Rating: " + 5 + "</p><p>Total reviews: " + 5 + "</p></div></div>");
+                            "</h4></div></div>");
 
                     });
                 }
@@ -438,7 +443,7 @@
                     $.getJSON('/getbubbles', function(data) {
                         $.each(data, function(index) {
                             var position = new google.maps.LatLng(data[index].longitude, data[index].latitude);
-                            addMarker(data[index].id,data[index].text,position)
+                            addMarker(data[index].id,data[index].text,position,data[index].updated_at)
                         });
                     });
                 }
