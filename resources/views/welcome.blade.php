@@ -318,25 +318,26 @@
                 addEventListener();
                 addWhereAmIbutton();
 
-                function placeMarker(position, map) {
-                    var bubbletext = window.prompt("Please enter your name", "TEO");
-
-
-                    var zoomLevel = map.getZoom()+'';
-                    marker = new google.maps.Marker({
-                        position: position,
-                        icon: 'img/minibubble.png',
-                        iconAnchor: new google.maps.Point(255.498,-26.204),
-                        label: { color: '#FF0000', fontWeight: 'bold', fontSize: zoomLevel , text: bubbletext},
-                        map: map
-                    });
-                    map.panTo(position);
-                    saveMarker(bubbletext,position.lng,position.lat)
-                }
 
 
 
 
+
+            }
+            function placeMarker(position, map) {
+                var bubbletext = window.prompt("Please enter your name", "TEO");
+
+
+                var zoomLevel = map.getZoom()+'';
+                marker = new google.maps.Marker({
+                    position: position,
+                    icon: 'img/minibubble.png',
+                    iconAnchor: new google.maps.Point(255.498,-26.204),
+                    label: { color: '#FF0000', fontWeight: 'bold', fontSize: zoomLevel , text: bubbletext},
+                    map: map
+                });
+                map.panTo(position);
+                saveMarker(bubbletext,position.lng,position.lat)
             }
             function addMarker(text,position){
 
