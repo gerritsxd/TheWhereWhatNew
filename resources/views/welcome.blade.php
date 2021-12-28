@@ -363,7 +363,7 @@
                     label: { color: '#FF0000', fontWeight: 'bold', fontSize: '14' , text: text},
                     map: map
                 });
-                    marker.addListener('mouseover', function() {
+                    marker.addListener('mousedown', function() {
                         infowindow.open(map, marker);
                         infowindow.setPosition(position)
                         infowindow.setContent("<div class='infowindow-container'>" +
@@ -374,7 +374,7 @@
                 }
             }
             function addWhereAmIbutton(){
-                infoWindow = new google.maps.InfoWindow();
+                infoWindow = new google.maps.Marker;
 
                 const locationButton = document.createElement("button");
 
@@ -392,8 +392,8 @@
                         };
 
                     infoWindow.setPosition(pos);
-                    infoWindow.setContent("Estoy aqui");
-                    infoWindow.open(map);
+
+
                     map.setCenter(pos);
                 },
                     () => {
