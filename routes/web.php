@@ -24,4 +24,3 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/addbubble/', [App\Http\Controllers\BubbleController::class, 'addBubble']);
 Route::get('/getbubbles/', [App\Http\Controllers\BubbleController::class, 'getBubbles']);
 
-\PWA::routes();
