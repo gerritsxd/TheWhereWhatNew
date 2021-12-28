@@ -316,7 +316,14 @@
 
 
                 map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-                addEventListener();
+                map.addListener('click', function(e) {
+                    @auth
+                        placeMarker(e.latLng, map);
+                    @endauth
+                    @guest
+                        window.alert("Please login to add event");
+                    @endguest
+                });
                 addWhereAmIbutton();
 
 
@@ -401,14 +408,7 @@
                 });
             }
             function addEventListener(){
-                map.addListener('click', function(e) {
-                    @auth
-                        placeMarker(e.latLng, map);
-                    @endauth
-                    @guest
-                        window.alert("Please login to add event");
-                    @endguest
-                });
+
 
             }
 
