@@ -356,7 +356,7 @@
                 if (!markers.includes(id)){
                 markers.push(id);
                     var seconds = Math.floor((new Date() -  new Date(updated_at).getTime()) / 1000);
-                    interval = seconds / 3600; //hours
+                    interval = seconds / 86400; //hours
                     opacity = 1 / interval;
                 opacity =
                 marker = new google.maps.Marker({

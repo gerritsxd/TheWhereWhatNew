@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBubbleRequest;
 use App\Http\Requests\UpdateBubbleRequest;
 use App\Models\Bubble;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
@@ -106,7 +107,10 @@ class BubbleController extends Controller
     }
 
     public function getBubbles(){
-        $bubbles = Bubble::all();
+        $bubbles = Bubble::where('updated_at', '>', Carbon::now()->subHours(24)->toDateTimeString())->get();
         return $bubbles;
+
+
+
     }
 }
