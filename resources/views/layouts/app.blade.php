@@ -17,6 +17,35 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    <style>
+        .bigbubble{
+            position:absolute;
+            left:10px;
+            top: 10px;
+            z-index:3;
+            width: 400px;
+            height: 400px;
+
+            background-image: url("img/bubble.svg");
+            background-size: 400px;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+        }
+        .bigbubbleform_horizontal{
+            width: 50%;
+            margin: 0 auto;
+
+        }
+        .bigbubbleform_vertical {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+
+    </style>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="manifest" href="{{ url('manifest.json') }}">

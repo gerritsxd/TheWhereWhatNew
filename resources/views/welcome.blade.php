@@ -3,6 +3,22 @@
 @section('content')
 
     <div id="googleMap"></div>
+    <div id="myModal" class="bigbubble" style="display: none;">
+                    <br><br><br><br>
+
+                    <form class="bigbubbleform_horizontal">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Title</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+
+                    </form>
+
+            </div>
 
 
 @endsection
@@ -13,6 +29,7 @@
         var infowindow;
         var markers = [];
         var bubblesize=128;
+
 
         var drawTheMap = function drawTheMap() {
             var location = {lat: 52.363953, lng: 4.882714};
@@ -363,19 +380,15 @@
                     optimized: true,
                     map: map
                 });
-                markers[id].addListener('mousedown', function () {
+                markers[id].addListener('dblclick', function () {
                     map.setZoom(17);
                     map.panTo(markers[id].position);
-                    map.panBy(0, -400);
-                    markers[id].setIcon(
-                        new google.maps.MarkerImage(
-                            markers[id].getIcon(), //marker's same icon graphic
-                            null,//size
-                            null,//origin
-                            null, //anchor
-                            new google.maps.Size(800, 800) //changes the scale
-                        )
-                    );
+                    var x = document.getElementById("myModal");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
 
                 });
             }
@@ -442,6 +455,9 @@
                     });
                 });
             }
+            $('#myModal').click(function(e) {
+                $('#myModal').hide();
+            });
         })
 
     </script>
