@@ -18,16 +18,16 @@
 
     <!-- Styles -->
     <style>
-        .bigbubble{
+        .inputbigbubble{
             position:absolute;
             left:10px;
             top: 10px;
             z-index:3;
-            width: 400px;
-            height: 400px;
+            width: 500px;
+            height: 500px;
 
             background-image: url("img/bubble.svg");
-            background-size: 400px;
+            background-size: 500px;
             top: 50%;
             left: 50%;
             -ms-transform: translateX(-50%) translateY(-50%);
@@ -35,14 +35,15 @@
             transform: translate(-50%,-50%);
         }
         .bigbubbleform_horizontal{
-            width: 50%;
+            width: 55%;
             margin: 0 auto;
+        }
+        .bigbubbletext{
+            color: red;
+            font-weight: bold;
+            font-size: 14px;
+        }
 
-        }
-        .bigbubbleform_vertical {
-            display: table-cell;
-            vertical-align: middle;
-        }
 
 
     </style>

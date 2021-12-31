@@ -3,22 +3,38 @@
 @section('content')
 
     <div id="googleMap"></div>
-    <div id="myModal" class="bigbubble" style="display: none;">
-                    <br><br><br><br>
+    <div id="inputBigBubble" class="inputbigbubble" style="display: none;">
+        <br><br><br><br><br><br><br>
+        <form class="bigbubbleform_horizontal">
+            <div class="form-group">
+                <input type="text" class="form-control" name="bubble-title" id="bubble-title" placeholder="Title">
+            </div>
+            <div class="form-group">
 
-                    <form class="bigbubbleform_horizontal">
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Title</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
+                <textarea class="form-control" name="bubble-text" id="bubble-text" placeholder="Text" rows="4"></textarea>
+            </div>
+            <div class="form-group text-center">
+                <a href="#" class="btn btn-primary" id="bubble-ok" >OK</a>
+            </div>
 
-                    </form>
+        </form>
+
+    </div>
+
+    <div id="BigBubble" class="inputbigbubble" style="display: none;">
+        <br><br><br><br><br><br><br>
+        <div class="bigbubbleform_horizontal">
+            <div  id="bubbletitle" class="bigbubbleform_horizontal bigbubbletext">
 
             </div>
+            <div class="form-group">
+
+                </div>
+
+
+        </div>
+
+    </div>
 
 
 @endsection
@@ -28,7 +44,7 @@
         var map;
         var infowindow;
         var markers = [];
-        var bubblesize=128;
+        var bubblepos;
 
 
         var drawTheMap = function drawTheMap() {
@@ -337,7 +353,13 @@
             map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
             map.addListener('click', function (e) {
                 @auth
-                    createNewMarker(e.latLng);
+                 map.setZoom(17);
+                 map.panTo(e.latLng);
+                bubblepos = e.latLng;
+                var inputBigBubble = document.getElementById("inputBigBubble");
+                if (inputBigBubble.style.display === "none") {
+                    inputBigBubble.style.display = "block";
+                }
                 @endauth
                 @guest
                     window.alert("Please login to add event");
@@ -352,18 +374,18 @@
             addWhereAmIbutton();
             infowindow = new google.maps.InfoWindow();
         }
-        function createNewMarker(position) {
-            var bubbletext = window.prompt("Que pasa aqui?", "__");
+        function createNewMarker(title,bubbletitle) {
+
             var zoomLevel = map.getZoom() + '';
             marker = new google.maps.Marker({
-                position: position,
+                position: bubblepos,
                 icon: 'img/bubble.svg',
                 iconAnchor: new google.maps.Point(255.498, -26.204),
-                label: {color: '#FF0000', fontWeight: 'bold', fontSize: zoomLevel, text: bubbletext},
+                label: {color: '#FF0000', fontWeight: 'bold', fontSize: zoomLevel, text: bubbletitle},
                 map: map
             });
-            map.panTo(position);
-            saveMarker(bubbletext, position.lng, position.lat)
+            map.panTo(bubblepos);
+            saveMarker(bubbletitle, bubblepos.lng, bubblepos.lat)
         }
         function addMarker(id, text, position, updated_at) {
             if (!markers.includes(id)) {
@@ -383,12 +405,9 @@
                 markers[id].addListener('dblclick', function () {
                     map.setZoom(17);
                     map.panTo(markers[id].position);
-                    var x = document.getElementById("myModal");
-                    if (x.style.display === "none") {
-                        x.style.display = "block";
-                    } else {
-                        x.style.display = "none";
-                    }
+                    $('#bubbletitle').html(markers[id].label.text);
+                    document.getElementById("BigBubble").style.display = "block";
+
 
                 });
             }
@@ -455,9 +474,15 @@
                     });
                 });
             }
-            $('#myModal').click(function(e) {
-                $('#myModal').hide();
-            });
+            $('#BigBubble').click(function(e) {
+                $('#BigBubble').hide();
+            })
+            $('#bubble-ok').click(function(e) {
+                var bubbletitle = $('#bubble-title').val();
+                var bubbletext = $('#bubble-title').val();
+                createNewMarker(bubbletitle,bubbletext);
+                $('#inputBigBubble').hide();
+            })
         })
 
     </script>
