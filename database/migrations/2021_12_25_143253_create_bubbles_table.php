@@ -17,6 +17,7 @@ class CreateBubblesTable extends Migration
             $table->id();
             $table->integer('userid');
             $table->integer('bubble_type');
+            $table->string('title');
             $table->string('text');
             $table->double('longitude');
             $table->double('latitude');

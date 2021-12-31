@@ -22,11 +22,10 @@
     </div>
 
     <div id="BigBubble" class="inputbigbubble" style="display: none;">
-        <br><br><br><br><br><br><br>
+        <br><br><br><br>
         <div class="bigbubbleform_horizontal">
-            <div  id="bubbletitle" class="bigbubbleform_horizontal bigbubbletext">
-
-            </div>
+            <div  id="bubbletitle" class="bigbubbleform_horizontal bigbubbletitle"></div>
+            <div  id="bubbletext" class="bigbubbleform_horizontal bigbubbletext"></div>
             <div class="form-group">
 
                 </div>
@@ -44,6 +43,8 @@
         var map;
         var infowindow;
         var markers = [];
+        var texts = [];
+        var markerids = [];
         var bubblepos;
 
 
@@ -374,7 +375,7 @@
             addWhereAmIbutton();
             infowindow = new google.maps.InfoWindow();
         }
-        function createNewMarker(title,bubbletitle) {
+        function createNewMarker(bubbletitle,bubbletext) {
 
             var zoomLevel = map.getZoom() + '';
             marker = new google.maps.Marker({
@@ -385,20 +386,22 @@
                 map: map
             });
             map.panTo(bubblepos);
-            saveMarker(bubbletitle, bubblepos.lng, bubblepos.lat)
+            saveMarker(bubbletitle, bubbletext,bubblepos.lng, bubblepos.lat)
         }
-        function addMarker(id, text, position, updated_at) {
-            if (!markers.includes(id)) {
-                markers.push(id);
+        function addMarker(id, title, text, position, updated_at) {
+            if (!markerids.includes(id)) {
+                markerids.push(id);
                 var seconds = Math.floor((new Date() - new Date(updated_at).getTime()) / 1000);
                 interval = seconds / 3600; //hours
                 opacity = 1 / interval;
                 //text = text + '<br> hace: '+Math.round(interval * 10) / 10+'horas';
+                texts[id]=text;
                 markers[id] = new google.maps.Marker({
                     position: position,
                     icon: 'img/bubble.svg',
                     opacity: opacity,
-                    label: {color: '#FF0000', fontWeight: 'bold', fontSize: '14', text: text},
+
+                    label: {color: '#FF0000', fontWeight: 'bold', fontSize: '14', text: title},
                     optimized: true,
                     map: map
                 });
@@ -406,6 +409,7 @@
                     map.setZoom(17);
                     map.panTo(markers[id].position);
                     $('#bubbletitle').html(markers[id].label.text);
+                    $('#bubbletext').html(texts[id]);
                     document.getElementById("BigBubble").style.display = "block";
 
 
@@ -413,7 +417,7 @@
             }
         }
 
-        function saveMarker(text, lat, long) {
+        function saveMarker(title,text, lat, long) {
                     @auth
             var userid = {{Auth::id()}};
             @endauth
@@ -421,7 +425,7 @@
                 url: '/addbubble/',
                 type: "GET",
                 dataType: "json",
-                data: {userid: userid, text: text, lat: lat, long: long},
+                data: {userid: userid, title:title, text: text, lat: lat, long: long},
                 success: function (data) {
 
 
@@ -470,7 +474,7 @@
                 $.getJSON('/getbubbles', function (data) {
                     $.each(data, function (index) {
                         var position = new google.maps.LatLng(data[index].longitude, data[index].latitude);
-                        addMarker(data[index].id, data[index].text, position, data[index].updated_at)
+                        addMarker(data[index].id, data[index].title, data[index].text, position, data[index].updated_at)
                     });
                 });
             }
@@ -479,7 +483,7 @@
             })
             $('#bubble-ok').click(function(e) {
                 var bubbletitle = $('#bubble-title').val();
-                var bubbletext = $('#bubble-title').val();
+                var bubbletext = $('#bubble-text').val();
                 createNewMarker(bubbletitle,bubbletext);
                 $('#inputBigBubble').hide();
             })

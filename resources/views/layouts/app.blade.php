@@ -38,9 +38,14 @@
             width: 55%;
             margin: 0 auto;
         }
-        .bigbubbletext{
+        .bigbubbletitle{
             color: red;
             font-weight: bold;
+            font-size: 14px;
+        }
+        .bigbubbletext{
+            color: black;
+            font-weight: normal;
             font-size: 14px;
         }
 
