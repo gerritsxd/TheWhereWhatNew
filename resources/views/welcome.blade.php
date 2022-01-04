@@ -426,9 +426,16 @@
                 type: "GET",
                 dataType: "json",
                 data: {userid: userid, title:title, text: text, lat: lat, long: long},
+                statusCode: {
+                    403: function() {
+                        window.location.href = "/email/verify";
+                    }},
                 success: function (data) {
 
 
+                },
+                fail: function(xhr, textStatus, errorThrown){
+                    alert('request failed');
                 }
             });
         }
