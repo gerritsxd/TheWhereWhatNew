@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="27" height="18" style=""><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/>
+  <defs id="defs4">
+    <radialGradient gradientUnits="userSpaceOnUse" cx="41.85599899291992" cy="89.5270004272461" r="13.5600004196167" id="gradient-0" gradientTransform="matrix(0.017318, 0.508682, -0.999421, 0.034026, 168.230304, 68.011219)">
+      <stop offset="0" style="stop-color: rgba(216, 216, 216, 1)"/>
+      <stop offset="1" style="stop-color: rgb(0, 187, 22); stop-opacity: 0.36;"/>
+    </radialGradient>
+  </defs>
+  
+  
+<g class="currentLayer" style=""><title>Layer 1</title><ellipse style="fill: url(#gradient-0);" cx="13.55999755859375" cy="9.093002319335938" rx="13.5600004196167" ry="9.093000411987305" id="svg_1" class=""/><text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 5.5px;" x="10.503994201660163" y="11.131003295898438" id="svg_2" class="">up</text></g></svg>

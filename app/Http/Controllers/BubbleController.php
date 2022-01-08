@@ -96,6 +96,8 @@ class BubbleController extends Controller
         $bubble->latitude = $request->get('lat');
         $bubble->title = $request->get('title');
         $bubble->text = $request->get('text');
+        $bubble->upvotes = 0;
+        $bubble->downvotes = 0;
 
         $bubble->bubble_type = 1;
         $bubble->save();
@@ -112,6 +114,20 @@ class BubbleController extends Controller
         return $bubbles;
 
 
+
+    }
+
+    public function voteBubble(Request $request){
+
+        $bubble = Bubble::find($request->get('id'));
+        if($request->get('vote')>0){
+            $bubble->increment('upvotes');
+        }else{
+            $bubble->increment('downvotes');
+        }
+        //$bubble->save();
+
+        return $bubble;
 
     }
 }

@@ -52,6 +52,13 @@
             font-weight: normal;
             font-size: 14px;
         }
+        .vote-buttons{
+            position: fixed;
+            left: 50%;
+            bottom: 80px;
+            transform: translate(-50%, -50%);
+            margin: 0 auto;
+        }
 
 
 

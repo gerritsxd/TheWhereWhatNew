@@ -21,6 +21,7 @@
 
         </form>
 
+
     </div>
 
     <div id="BigBubble" class="inputbigbubble" style="display: none;">
@@ -31,9 +32,16 @@
             <div class="form-group">
 
                 </div>
+            <div class="vote-buttons">
+                <img src="/img/down.svg" width="100" id="downvote">
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="/img/up.svg" width="100" id="upvote">
+            </div>
 
 
         </div>
+
 
     </div>
 
@@ -48,6 +56,9 @@
         var texts = [];
         var markerids = [];
         var bubblepos;
+        var activemarkerid;
+        var userid;
+
 
 
         var drawTheMap = function drawTheMap() {
@@ -382,17 +393,18 @@
         function createNewMarker(bubbletitle,bubbletext) {
 
             var zoomLevel = map.getZoom() + '';
-            marker = new google.maps.Marker({
+            marker = new google.maps.MarkerWithLabel({
                 position: bubblepos,
                 icon: 'img/bubble.svg',
                 iconAnchor: new google.maps.Point(255.498, -26.204),
                 label: {color: '#FF0000', fontWeight: 'bold', fontSize: zoomLevel, text: bubbletitle},
+                title:bubbletext,
                 map: map
             });
             map.panTo(bubblepos);
             saveMarker(bubbletitle, bubbletext,bubblepos.lng, bubblepos.lat)
         }
-        function addMarker(id, title, text, position, updated_at) {
+        function addMarker(id, title, text, position, updated_at,upvotes,downvotes) {
             if (!markerids.includes(id)) {
                 markerids.push(id);
                 var seconds = Math.floor((new Date() - new Date(updated_at).getTime()) / 1000);
@@ -400,18 +412,22 @@
                 opacity = 1 / interval;
                 //text = text + '<br> hace: '+Math.round(interval * 10) / 10+'horas';
                 texts[id]=text;
+                bubblezize = 70 * (upvotes-downvotes);
                 markers[id] = new google.maps.Marker({
                     position: position,
-                    icon: 'img/bubble.svg',
+                    icon: {url:'img/bubble.svg', scaledSize: new google.maps.Size(bubblezize, bubblezize)},
                     opacity: opacity,
-
                     label: {color: '#FF0000', fontWeight: 'bold', fontSize: '14', text: title},
                     optimized: true,
                     map: map
                 });
                 markers[id].addListener('dblclick', function () {
+                    markers[id].setMap(null);
+
+                    activemarkerid = id;
                     map.setZoom(17);
                     map.panTo(markers[id].position);
+                    map.panBy(10,-200);
                     $('#bubbletitle').html(markers[id].label.text);
                     $('#bubbletext').html(texts[id]);
                     document.getElementById("BigBubble").style.display = "block";
@@ -422,9 +438,7 @@
         }
 
         function saveMarker(title,text, lat, long) {
-                    @auth
-            var userid = {{Auth::id()}};
-            @endauth
+
             $.ajax({
                 url: '/addbubble/',
                 type: "GET",
@@ -443,12 +457,33 @@
                 }
             });
         }
+        function voteBubble(vote){
+
+            $.ajax({
+                url: '/votebubble/',
+                type: "GET",
+                dataType: "json",
+                data: {userid: userid, id:activemarkerid , vote:vote},
+                statusCode: {
+                    403: function() {
+                        window.location.href = "/email/verify";
+                    }},
+                success: function (data) {
+                    console.log(data);
+
+                },
+                fail: function(xhr, textStatus, errorThrown){
+                    alert('request failed');
+                }
+            });
+
+        }
         function addWhereAmIbutton() {
             infoWindow = new google.maps.Marker;
 
             const locationButton = document.createElement("button");
             locationButton.backgroundImage = "/img/mylocation.svg";
-            locationButton.textContent = "¿Find me?";
+            locationButton.textContent = "Find me";
             locationButton.classList.add("btn");
             locationButton.classList.add("btn-secondary");
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
@@ -486,7 +521,7 @@
                 $.getJSON('/getbubbles', function (data) {
                     $.each(data, function (index) {
                         var position = new google.maps.LatLng(data[index].longitude, data[index].latitude);
-                        addMarker(data[index].id, data[index].title, data[index].text, position, data[index].updated_at)
+                        addMarker(data[index].id, data[index].title, data[index].text, position, data[index].updated_at,data[index].upvotes,data[index].downvotes)
                     });
                 });
             }
@@ -502,6 +537,25 @@
             $('#bubble-cancel').click(function(e) {
                 $('#inputBigBubble').hide();
             })
+            $('#upvote').click(function(e) {
+                voteBubble(1);
+                const index = markerids.indexOf(activemarkerid);
+                if (index > -1) {
+                    markerids.splice(index, 1);
+                }
+                $('#inputBigBubble').hide();
+            })
+            $('#downvote').click(function(e) {
+                voteBubble(-1);
+                const index = markerids.indexOf(activemarkerid);
+                if (index > -1) {
+                    markerids.splice(index, 1);
+                }
+                $('#inputBigBubble').hide();
+            })
+            @auth
+                userid = {{Auth::id()}};
+            @endauth
         })
 
     </script>
