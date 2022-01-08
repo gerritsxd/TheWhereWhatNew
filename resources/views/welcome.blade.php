@@ -7,14 +7,16 @@
         <br><br><br><br><br><br><br>
         <form class="bigbubbleform_horizontal">
             <div class="form-group">
-                <input type="text" class="form-control" name="bubble-title" id="bubble-title" placeholder="Title">
+                <input type="text" class="form-control bubble-input" name="bubble-title" id="bubble-title"  maxlength="15" placeholder="Title">
             </div>
             <div class="form-group">
 
-                <textarea class="form-control" name="bubble-text" id="bubble-text" placeholder="Text" rows="4"></textarea>
+                <textarea class="form-control bubble-input" name="bubble-text" id="bubble-text"  maxlength="100" placeholder="Text" rows="4"></textarea>
             </div>
+            <div><br></div>
             <div class="form-group text-center">
-                <a href="#" class="btn btn-primary" id="bubble-ok" >OK</a>
+                <a href="#" class="btn btn-outline-primary btn-rounded" id="bubble-ok" >OK</a>
+                <a href="#" class="btn btn-outline-primary" id="bubble-cancel" >Cancel</a>
             </div>
 
         </form>
@@ -57,6 +59,7 @@
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 disableDefaultUI: true,
                 gestureHandling: "greedy",
+                draggableCursor: 'crosshair',
                 styles: [
                     {
                         "elementType": "geometry",
@@ -356,6 +359,7 @@
                 @auth
                  map.setZoom(17);
                  map.panTo(e.latLng);
+                 map.panBy(10,-200);
                 bubblepos = e.latLng;
                 var inputBigBubble = document.getElementById("inputBigBubble");
                 if (inputBigBubble.style.display === "none") {
@@ -443,9 +447,10 @@
             infoWindow = new google.maps.Marker;
 
             const locationButton = document.createElement("button");
-
-            locationButton.textContent = "¿Donde estoy?";
-            locationButton.classList.add("custom-map-control-button");
+            locationButton.backgroundImage = "/img/mylocation.svg";
+            locationButton.textContent = "¿Find me?";
+            locationButton.classList.add("btn");
+            locationButton.classList.add("btn-secondary");
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
             locationButton.addEventListener("click", () => {
                 // Try HTML5 geolocation.
@@ -492,6 +497,9 @@
                 var bubbletitle = $('#bubble-title').val();
                 var bubbletext = $('#bubble-text').val();
                 createNewMarker(bubbletitle,bubbletext);
+                $('#inputBigBubble').hide();
+            })
+            $('#bubble-cancel').click(function(e) {
                 $('#inputBigBubble').hide();
             })
         })

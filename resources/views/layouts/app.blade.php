@@ -34,6 +34,10 @@
             -webkit-transform: translate(-50%,-50%);
             transform: translate(-50%,-50%);
         }
+        .form-control.bubble-input{
+            background-color: rgba(248, 250, 252, .75);
+            border: none;
+        }
         .bigbubbleform_horizontal{
             width: 55%;
             margin: 0 auto;
