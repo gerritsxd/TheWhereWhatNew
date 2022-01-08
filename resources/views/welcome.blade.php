@@ -544,6 +544,7 @@
                     markerids.splice(index, 1);
                 }
                 $('#inputBigBubble').hide();
+                loadMarkers();
             })
             $('#downvote').click(function(e) {
                 voteBubble(-1);
@@ -552,6 +553,7 @@
                     markerids.splice(index, 1);
                 }
                 $('#inputBigBubble').hide();
+                loadMarkers();
             })
             @auth
                 userid = {{Auth::id()}};
