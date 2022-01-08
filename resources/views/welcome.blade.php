@@ -393,7 +393,7 @@
         function createNewMarker(bubbletitle,bubbletext) {
 
             var zoomLevel = map.getZoom() + '';
-            marker = new google.maps.MarkerWithLabel({
+            marker = new google.maps.Marker({
                 position: bubblepos,
                 icon: 'img/bubble.svg',
                 iconAnchor: new google.maps.Point(255.498, -26.204),
