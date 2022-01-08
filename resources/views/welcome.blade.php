@@ -388,7 +388,7 @@
                 }
             });
             addWhereAmIbutton();
-            infowindow = new google.maps.InfoWindow();
+            checkGeolocation();
         }
         function createNewMarker(bubbletitle,bubbletext) {
 
@@ -498,8 +498,6 @@
                             };
 
                             infoWindow.setPosition(pos);
-
-
                             map.setCenter(pos);
                         },
                         () => {
@@ -512,7 +510,36 @@
                 }
             });
         }
+        function getCoords() {
+            return new Promise((resolve, reject) =>
+                navigator.permissions ?
+
+                    // Permission API is implemented
+                    navigator.permissions.query({
+                        name: 'geolocation'
+                    }).then(permission =>
+                        // is geolocation granted?
+                        permission.state === "granted"
+                            ? navigator.geolocation.getCurrentPosition(pos => resolve(pos.coords))
+                            : reject()
+                    ) :
+
+                    // Permission API was not implemented
+                    reject(new Error("Permission API is not supported"))
+            )
+        }
+        function checkGeolocation(){
+            coords=new google.maps.LatLng(52.364061, 4.882769);
+            getCoords().then(
+                    coords => map.panTo(new google.maps.LatLng(coords.latitude,coords.longitude)),
+                    reject => map.panTo(new google.maps.LatLng(52.364061, 4.882769))
+            )
+
+
+
+        }
         jQuery(document).ready(function () {
+
             loadMarkers();
             setInterval(function () {
                 loadMarkers()
@@ -525,6 +552,7 @@
                     });
                 });
             }
+
             $('#BigBubble').click(function(e) {
                 $('#BigBubble').hide();
             })
