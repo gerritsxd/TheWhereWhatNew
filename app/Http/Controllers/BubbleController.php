@@ -96,7 +96,7 @@ class BubbleController extends Controller
         $bubble->latitude = $request->get('lat');
         $bubble->title = $request->get('title');
         $bubble->text = $request->get('text');
-        $bubble->upvotes = 0;
+        $bubble->upvotes = 1;
         $bubble->downvotes = 0;
 
         $bubble->bubble_type = 1;
