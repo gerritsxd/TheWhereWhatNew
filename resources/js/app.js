@@ -188,6 +188,65 @@ voteBubble = function (vote){
     });
 
 }
+
+addWhereAmIbutton = function() {
+    const locationButton = document.createElement("button");
+    locationButton.backgroundImage = "/img/mylocation.svg";
+    locationButton.textContent = "Find me";
+    locationButton.classList.add("btn");
+    locationButton.classList.add("btn-secondary");
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    locationButton.addEventListener("click", () => {
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+
+
+                    map.setCenter(pos);
+                },
+                () => {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                }
+            );
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    });
+}
+getCoords = function () {
+    return new Promise((resolve, reject) =>
+        navigator.permissions ?
+
+            // Permission API is implemented
+            navigator.permissions.query({
+                name: 'geolocation'
+            }).then(permission =>
+                // is geolocation granted?
+                permission.state === "granted"
+                    ? navigator.geolocation.getCurrentPosition(pos => resolve(pos.coords))
+                    : reject()
+            ) :
+
+            // Permission API was not implemented
+            reject(new Error("Permission API is not supported"))
+    )
+}
+checkGeolocation = function (){
+    coords=new google.maps.LatLng(52.364061, 4.882769);
+    getCoords().then(
+        coords => map.panTo(new google.maps.LatLng(coords.latitude,coords.longitude)),
+        reject => map.panTo(new google.maps.LatLng(52.364061, 4.882769))
+    )
+
+
+
+}
 drawTheMap = function drawTheMap() {
     var mapProp = {
         center: new google.maps.LatLng(52.364061, 4.882769),
@@ -342,5 +401,8 @@ drawTheMap = function drawTheMap() {
     map.addListener('zoom_changed', function() {
         resizeMarkers();
     })
+    addWhereAmIbutton();
+    checkGeolocation();
+
 
 }

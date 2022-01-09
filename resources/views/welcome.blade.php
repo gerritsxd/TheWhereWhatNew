@@ -55,6 +55,7 @@
         var loadedbubbles = [];
         var markers = [];
         var userid;
+        var map;
 
 
         function loadBubbles() {
@@ -106,6 +107,8 @@
 
 
 
+
+
         jQuery(document).ready(function () {
             loadBubbles();
             setInterval(function () {
@@ -139,7 +142,6 @@
         @auth
             userid = {{Auth::id()}};
         @endauth
-
 
 
     </script>

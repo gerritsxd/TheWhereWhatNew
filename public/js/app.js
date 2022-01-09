@@ -5487,6 +5487,57 @@ voteBubble = function voteBubble(vote) {
   });
 };
 
+addWhereAmIbutton = function addWhereAmIbutton() {
+  var locationButton = document.createElement("button");
+  locationButton.backgroundImage = "/img/mylocation.svg";
+  locationButton.textContent = "Find me";
+  locationButton.classList.add("btn");
+  locationButton.classList.add("btn-secondary");
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+  locationButton.addEventListener("click", function () {
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        map.setCenter(pos);
+      }, function () {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+  });
+};
+
+getCoords = function getCoords() {
+  return new Promise(function (resolve, reject) {
+    return navigator.permissions ? // Permission API is implemented
+    navigator.permissions.query({
+      name: 'geolocation'
+    }).then(function (permission) {
+      return (// is geolocation granted?
+        permission.state === "granted" ? navigator.geolocation.getCurrentPosition(function (pos) {
+          return resolve(pos.coords);
+        }) : reject()
+      );
+    }) : // Permission API was not implemented
+    reject(new Error("Permission API is not supported"));
+  });
+};
+
+checkGeolocation = function checkGeolocation() {
+  coords = new google.maps.LatLng(52.364061, 4.882769);
+  getCoords().then(function (coords) {
+    return map.panTo(new google.maps.LatLng(coords.latitude, coords.longitude));
+  }, function (reject) {
+    return map.panTo(new google.maps.LatLng(52.364061, 4.882769));
+  });
+};
+
 drawTheMap = function drawTheMap() {
   var mapProp = {
     center: new google.maps.LatLng(52.364061, 4.882769),
@@ -5596,6 +5647,8 @@ drawTheMap = function drawTheMap() {
   map.addListener('zoom_changed', function () {
     resizeMarkers();
   });
+  addWhereAmIbutton();
+  checkGeolocation();
 };
 
 /***/ }),
