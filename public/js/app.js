@@ -5304,6 +5304,300 @@ var app = new Vue({
   el: '#app'
 });
 
+getObseleteBubbles = function getObseleteBubbles(loadedbubbles, orgbubbles) {
+  var obsolete_bubbles = [];
+  $.each(orgbubbles, function (index) {
+    if (loadedbubbles.some(function (bubble) {
+      return bubble.id === orgbubbles[index].id;
+    })) {} else {
+      obsolete_bubbles.push(orgbubbles[index]);
+    }
+
+    ;
+  });
+  return obsolete_bubbles;
+};
+
+getNewBubbles = function getNewBubbles(loadedbubbles, orgbubbles) {
+  var new_bubbles = [];
+  $.each(loadedbubbles, function (index) {
+    if (orgbubbles.some(function (bubble) {
+      return bubble.id === loadedbubbles[index].id;
+    })) {} else {
+      new_bubbles.push(loadedbubbles[index]);
+    }
+
+    ;
+  });
+  return new_bubbles;
+};
+
+getChangedBubbles = function getChangedBubbles(loadedbubbles, orgbubbles) {
+  changed_bubbles = [];
+  $.each(loadedbubbles, function (index) {
+    if (JSON.stringify(loadedbubbles[index]) === JSON.stringify(orgbubbles[index])) {} else {
+      changed_bubbles.push(loadedbubbles[index]);
+    }
+  });
+  return changed_bubbles;
+};
+
+updateChangedBubbles = function updateChangedBubbles(bubbles) {
+  $.each(bubbles, function (index) {
+    changeMarker(bubbles[index]);
+    var orgbubbleid = orgbubbles.findIndex(function (orgbubble) {
+      return orgbubble.id === bubbles[index].id;
+    });
+    orgbubbles[orgbubbleid] = bubbles[index];
+  });
+};
+
+addNewBubbles = function addNewBubbles(bubbles) {
+  $.each(bubbles, function (index) {
+    currentbubbleID = bubbles[index].id;
+    var marker = addMarker(bubbles[index]);
+    markers.push({
+      currentbubbleID: currentbubbleID,
+      marker: marker
+    });
+    orgbubbles.push(bubbles[index]);
+  });
+};
+
+removeObseleteBubbles = function removeObseleteBubbles(bubbles) {
+  $.each(bubbles, function (index) {
+    removeMarker(bubbles[index].id);
+    orgbubbles.splice(bubbles[index].indexOf(bubbles[index].id), 1);
+  });
+};
+
+changeMarker = function changeMarker(bubble) {
+  marker = markers.find(function (marker) {
+    return marker.currentbubbleID === bubble.id;
+  }).marker;
+  votesmultiplier = bubble.upvotes - bubble.downvotes;
+  bubblezize = 70 * votesmultiplier;
+  marker.setIcon(new google.maps.MarkerImage(marker.getIcon().url, //marker's same icon graphic
+  null, //size
+  null, //origin
+  null, //anchor
+  new google.maps.Size(bubblezize, bubblezize) //changes the scale
+  ));
+  var labelObj = {};
+  var label = marker.getLabel().text;
+  labelObj.fontSize = 6 * votesmultiplier + 'px';
+  labelObj.text = label;
+  marker.setLabel(labelObj);
+};
+
+removeMarker = function removeMarker(bubbleID) {
+  var obsoletemarker = markers.find(function (marker) {
+    return marker.currentbubbleID === bubbleID;
+  });
+  obsoletemarker.marker.setMap(null);
+  var removeIndex = markers.map(function (item) {
+    return item.id;
+  }).indexOf(bubbleID);
+  ~removeIndex && markers.splice(removeIndex, 1);
+};
+
+saveMarker = function saveMarker(title, text, lat, _long) {
+  $.ajax({
+    url: '/addbubble/',
+    type: "GET",
+    dataType: "json",
+    data: {
+      userid: userid,
+      title: title,
+      text: text,
+      lat: lat,
+      "long": _long
+    },
+    statusCode: {
+      403: function _() {
+        window.location.href = "/email/verify";
+      }
+    },
+    success: function success(data) {},
+    fail: function fail(xhr, textStatus, errorThrown) {
+      alert('request failed');
+    }
+  });
+};
+
+createNewMarker = function createNewMarker(bubbletitle, bubbletext) {
+  map.panTo(bubblepos);
+  saveMarker(bubbletitle, bubbletext, bubblepos.lng, bubblepos.lat);
+};
+
+addMarker = function addMarker(bubble) {
+  position = new google.maps.LatLng(bubble.longitude, bubble.latitude);
+  votesmultiplier = bubble.upvotes - bubble.downvotes;
+  bubblezize = 70 * votesmultiplier;
+  var marker = new google.maps.Marker({
+    position: position,
+    icon: {
+      url: 'img/bubble.svg',
+      scaledSize: new google.maps.Size(bubblezize, bubblezize)
+    },
+    opacity: 1,
+    label: {
+      color: '#000000',
+      fontWeight: 'normal',
+      fontSize: 6 * votesmultiplier + 'px',
+      text: bubble.title
+    },
+    optimized: true,
+    map: map
+  });
+  marker.addListener('dblclick', function () {
+    //marker.setMap(null);
+    activemarkerid = bubble.id;
+    map.setZoom(17);
+    map.panTo(marker.position);
+    map.panBy(10, -200);
+    $('#bubbletitle').html(bubble.title);
+    $('#bubbletext').html(bubble.text);
+    document.getElementById("BigBubble").style.display = "block";
+  });
+  return marker;
+};
+
+voteBubble = function voteBubble(vote) {
+  $.ajax({
+    url: '/votebubble/',
+    type: "GET",
+    dataType: "json",
+    data: {
+      userid: userid,
+      id: activemarkerid,
+      vote: vote
+    },
+    statusCode: {
+      403: function _() {
+        window.location.href = "/email/verify";
+      }
+    },
+    success: function success(data) {
+      console.log(data);
+    },
+    fail: function fail(xhr, textStatus, errorThrown) {
+      alert('request failed');
+    }
+  });
+};
+
+drawTheMap = function drawTheMap() {
+  var mapProp = {
+    center: new google.maps.LatLng(52.364061, 4.882769),
+    zoom: 14,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    disableDefaultUI: false,
+    gestureHandling: "greedy",
+    draggableCursor: 'crosshair',
+    styles: [{
+      "featureType": "administrative.country",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#378a00"
+      }]
+    }, {
+      "featureType": "landscape.man_made",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#998fe6"
+      }]
+    }, {
+      "featureType": "landscape.natural",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#2c9905"
+      }]
+    }, {
+      "featureType": "landscape.natural.terrain",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#bc7906"
+      }]
+    }, {
+      "featureType": "poi.attraction",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#3606bc"
+      }]
+    }, {
+      "featureType": "poi.business",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#6d6d6f"
+      }]
+    }, {
+      "featureType": "poi.government",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#6d6d6f"
+      }]
+    }, {
+      "featureType": "poi.medical",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#940025"
+      }]
+    }, {
+      "featureType": "poi.park",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#4cb625"
+      }]
+    }, {
+      "featureType": "poi.place_of_worship",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#b719c2"
+      }]
+    }, {
+      "featureType": "poi.school",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#7619c2"
+      }]
+    }, {
+      "featureType": "poi.sports_complex",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#8026c9"
+      }]
+    }, {
+      "featureType": "transit.station.airport",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#a8a8a8"
+      }]
+    }, {
+      "featureType": "water",
+      "elementType": "geometry.fill",
+      "stylers": [{
+        "color": "#3d28e2"
+      }]
+    }]
+  };
+  map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+  map.addListener('click', function (e) {
+    map.setZoom(17);
+    map.panTo(e.latLng);
+    map.panBy(10, -200);
+    bubblepos = e.latLng;
+    var inputBigBubble = document.getElementById("inputBigBubble");
+
+    if (inputBigBubble.style.display === "none") {
+      inputBigBubble.style.display = "block";
+    }
+  });
+  map.addListener('zoom_changed', function () {
+    resizeMarkers();
+  });
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
