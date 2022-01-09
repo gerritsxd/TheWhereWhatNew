@@ -5543,7 +5543,7 @@ drawTheMap = function drawTheMap() {
     center: new google.maps.LatLng(52.364061, 4.882769),
     zoom: 14,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    disableDefaultUI: false,
+    disableDefaultUI: true,
     gestureHandling: "greedy",
     draggableCursor: 'crosshair',
     styles: [{
