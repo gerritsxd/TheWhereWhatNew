@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateBubbleRequest;
 use App\Models\Bubble;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class BubbleController extends Controller
@@ -110,7 +111,8 @@ class BubbleController extends Controller
     }
 
     public function getBubbles(){
-        $bubbles = Bubble::where('updated_at', '>', Carbon::now()->subHours(24)->toDateTimeString())->get();
+        $bubbles = Bubble::where('updated_at', '>', Carbon::now()->subHours(24)->toDateTimeString())->with('user')->get();
+        //Log::debug('bubbles:'.$bubbles[0]->user);
         return $bubbles;
 
 

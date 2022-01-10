@@ -26,7 +26,7 @@
             width: 500px;
             height: 500px;
 
-            background-image: url("img/bubble.svg");
+            background-image: url("img/bubbleopaque.svg");
             background-size: 500px;
             top: 50%;
             left: 50%;
@@ -38,19 +38,30 @@
             background-color: rgba(248, 250, 252, .75);
             border: none;
         }
+        .bigbubbleinputform_horizontal{
+            width: 50%;
+            margin: 0 auto;
+        }
         .bigbubbleform_horizontal{
-            width: 55%;
+            width: 75%;
             margin: 0 auto;
         }
         .bigbubbletitle{
-            color: red;
+            color: black;
+            text-align: center;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
         }
         .bigbubbletext{
             color: black;
             font-weight: normal;
             font-size: 14px;
+        }
+        .bigbubbleredtext{
+            color: red;
+            text-align: center;
+            font-style: italic;
+            font-size: 12px;
         }
         .vote-buttons{
             position: fixed;

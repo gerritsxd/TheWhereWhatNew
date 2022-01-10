@@ -3,16 +3,17 @@
 
     <div id="googleMap"></div>
     <div id="inputBigBubble" class="inputbigbubble" style="display: none;">
-        <br><br><br><br><br><br><br>
-        <form class="bigbubbleform_horizontal">
+        <br><br><br><br><br><br>
+        <div class="bigbubbletitle">Share what's happening</div>
+        <form class="bigbubbleinputform_horizontal">
             <div class="form-group">
                 <input type="text" class="form-control bubble-input" name="bubble-title" id="bubble-title"
-                       maxlength="15" placeholder="Title">
+                       maxlength="15" placeholder="Short title">
             </div>
             <div class="form-group">
 
-                <textarea class="form-control bubble-input" name="bubble-text" id="bubble-text" maxlength="100"
-                          placeholder="Text" rows="4"></textarea>
+                <textarea class="form-control bubble-input" name="bubble-text" id="bubble-text" maxlength="250"
+                          placeholder="Description" rows="4"></textarea>
             </div>
             <div><br></div>
             <div class="form-group text-center">
@@ -29,7 +30,9 @@
         <br><br><br><br>
         <div class="bigbubbleform_horizontal">
             <div id="bubbletitle" class="bigbubbleform_horizontal bigbubbletitle"></div>
+            <br>
             <div id="bubbletext" class="bigbubbleform_horizontal bigbubbletext"></div>
+            <div id="bubbleowner" class="bigbubbleform_horizontal bigbubbleredtext"></div>
             <div class="form-group">
 
             </div>
@@ -122,12 +125,14 @@
 
             $('#upvote').click(function(e) {
                 voteBubble(1);
+                loadBubbles();
                 $('#inputBigBubble').hide();
 
             })
 
             $('#downvote').click(function(e) {
                 voteBubble(-1);
+                loadBubbles();
                 $('#inputBigBubble').hide();
             })
             $('#bubble-ok').click(function(e) {

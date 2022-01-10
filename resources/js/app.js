@@ -157,11 +157,13 @@ addMarker = function (bubble){
     marker.addListener('dblclick', function () {
         //marker.setMap(null);
         activemarkerid = bubble.id;
-        map.setZoom(17);
+        //map.setZoom(16);
         map.panTo(marker.position);
         map.panBy(10,-200);
         $('#bubbletitle').html(bubble.title);
         $('#bubbletext').html(bubble.text);
+        $('#bubbleowner').html(bubble.user.name);
+        console.log(bubble.user.name)
         document.getElementById("BigBubble").style.display = "block";
     });
     return marker;

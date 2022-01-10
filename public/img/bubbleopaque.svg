@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg id="svg2" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs id="defs4">
+    <radialGradient id="radialGradient4470" gradientUnits="userSpaceOnUse" cy="42.526" cx="5.8141" gradientTransform="matrix(1.7539 0 0 1.6958 2.8166 -25.281)" r="49.214">
+      <stop id="stop3775" style="stop-color:#d5f6ff" offset="0"/>
+      <stop id="stop3781" style="stop-color:#00ccff" offset="0.3368"/>
+      <stop id="stop3783" style="stop-color:#d4f6ff" offset="0.7144"/>
+      <stop id="stop3777" style="stop-color:#00aad4" offset="1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient4472" gradientUnits="userSpaceOnUse" cy="20.564" cx="33.549" gradientTransform="matrix(2.5937 0 0 2.4304 -53.447 -27.171)" r="49.214">
+      <stop id="stop2991" style="stop-color:#ffffff" offset="0"/>
+      <stop id="stop2993" style="stop-color:#ffffff;stop-opacity:0" offset="1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient4474" gradientUnits="userSpaceOnUse" cy="42.526" cx="5.8141" gradientTransform="matrix(1.7539 0 0 1.6958 2.8166 -25.281)" r="49.214">
+      <stop id="stop3810" style="stop-color:#c0dde6" offset="0"/>
+      <stop id="stop3812" style="stop-color:#00b8e6" offset="0.3368"/>
+      <stop id="stop3814" style="stop-color:#bfdde6" offset="0.7144"/>
+      <stop id="stop3816" style="stop-color:#0099bf" offset="1"/>
+    </radialGradient>
+  </defs>
+  <g id="layer1" transform="translate(0 -924.36)">
+    <g id="g6180" style="opacity:.9" transform="matrix(.93829 0 0 .93829 30.723 381.89)">
+      <path id="path6182" style="fill-rule:evenodd;fill:url(#radialGradient4470)" d="M 83.728 71.585 C 83.728 98.765 60.525 118.794 34.347 122.303 C 8.169 125.812 -14.7 98.765 -14.7 71.585 C -14.7 44.405 7.334 22.371 34.514 22.371 C 61.694 22.371 83.728 44.405 83.728 71.585 Z" transform="translate(0 572.36)"/>
+      <path id="path6184" style="fill-rule:evenodd;fill:url(#radialGradient4472)" d="m83.728 71.585c0 27.18-22.034 49.214-49.214 49.214s-49.214-22.034-49.214-49.214 22.034-49.214 49.214-49.214 49.214 22.034 49.214 49.214z" transform="matrix(.52922 0 0 .29221 15.609 592.19)"/>
+      <path id="path6186" d="M 65.062 33.031 C 73.968 41.937 79.468 54.253 79.468 67.843 C 79.468 95.023 60.939 121.406 33.758 121.406 C 22.324 121.406 8.323 113.135 -0.032 106.593 C 8.855 115.362 32.829 141.697 32.829 141.697 C 32.829 141.697 83.718 98.774 83.718 71.593 C 83.718 55.964 76.422 42.046 65.062 33.031 Z" style="fill-rule:evenodd;fill:url(#radialGradient4474)" transform="translate(0 572.36)"/>
+    </g>
+  </g>
+</svg>
