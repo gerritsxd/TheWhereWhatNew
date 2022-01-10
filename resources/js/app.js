@@ -143,13 +143,14 @@ createNewMarker = function (bubbletitle,bubbletext) {
 addMarker = function (bubble){
 
     position = new google.maps.LatLng(bubble.longitude, bubble.latitude);
-    votesmultiplier = (bubble.upvotes-bubble.downvotes);
-    bubblezize = 70 * votesmultiplier ;
+    zoommultiplier = 14 - map.getZoom();
+    votesmultiplier = votesmultiplier = getvotesmultiplier(bubble.upvotes-bubble.downvotes);
+    bubblezize = (70 * votesmultiplier) - (zoommultiplier *70);
     var marker = new google.maps.Marker({
         position: position,
         icon: {url:'img/bubble.svg', scaledSize: new google.maps.Size(bubblezize, bubblezize)},
         opacity: 1,
-        label: {color: '#000000', fontWeight: 'normal', fontSize: 6*votesmultiplier+'px', text: bubble.title},
+        label: {color: '#000000', fontWeight: 'normal', fontSize: (votesmultiplier * 6) -(zoommultiplier*6)+'px', text: bubble.title},
         optimized: true,
         map: map
     });
@@ -187,6 +188,13 @@ voteBubble = function (vote){
         }
     });
 
+}
+
+getvotesmultiplier = function (n){
+    var i, s = 0.0;
+    for (i = 1; i <= n; i++)
+        s = s + 1/i;
+    return s;
 }
 
 addWhereAmIbutton = function() {

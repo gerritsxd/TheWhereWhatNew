@@ -80,7 +80,7 @@
         }
         function resizeMarker(marker,bubble){
             minbubblesize = 15;
-            votesmultiplier = (bubble.upvotes-bubble.downvotes);
+            votesmultiplier = getvotesmultiplier(bubble.upvotes-bubble.downvotes);
             zoommultiplier = 14 - map.getZoom();
             bubblezize = (70 * votesmultiplier) - (zoommultiplier *70) < minbubblesize?minbubblesize:(70 * votesmultiplier) - (zoommultiplier *70);
 
@@ -102,6 +102,7 @@
 
             marker.setLabel(labelObj)
         }
+
 
 
 
