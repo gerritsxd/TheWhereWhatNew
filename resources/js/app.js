@@ -84,8 +84,11 @@ removeObseleteBubbles = function (bubbles){
 changeMarker = function (bubble){
 
     marker = markers.find(marker => marker.currentbubbleID === bubble.id).marker;
-    votesmultiplier = (bubble.upvotes-bubble.downvotes);
-    bubblezize = 70 * votesmultiplier ;
+    minbubblesize = 15;
+    votesmultiplier = getvotesmultiplier(bubble.upvotes-bubble.downvotes);
+    zoommultiplier = 14 - map.getZoom();
+    bubblezize = (70 * votesmultiplier) - (zoommultiplier *70) < minbubblesize?minbubblesize:(70 * votesmultiplier) - (zoommultiplier *70);
+
     marker.setIcon(
         new google.maps.MarkerImage(
             marker.getIcon().url, //marker's same icon graphic
@@ -97,8 +100,8 @@ changeMarker = function (bubble){
     )
     var labelObj = {};
     var label = marker.getLabel().text;
-
-    labelObj.fontSize =6*votesmultiplier+'px';
+    var fontsize = (votesmultiplier * 6) -(zoommultiplier*6) +"px";
+    labelObj.fontSize =fontsize+'px';
     labelObj.text=label;
 
     marker.setLabel(labelObj)
