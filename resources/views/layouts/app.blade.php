@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js?01122022') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,7 +26,7 @@
             width: 500px;
             height: 500px;
 
-            background-image: url("img/bubbleopaque.svg");
+            background-image: url("/img/bubbleopaque.svg");
             background-size: 500px;
             top: 50%;
             left: 50%;

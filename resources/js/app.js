@@ -143,6 +143,30 @@ createNewMarker = function (bubbletitle,bubbletext) {
 
 }
 
+markerOnDblClick = function (bubble) {
+//marker.setMap(null);
+    activemarkerid = bubble.id;
+    map.setZoom(16);
+    map.panTo( new google.maps.LatLng(bubble.longitude, bubble.latitude));
+    map.panBy(10, -200);
+    $('#bubbletitle').html(bubble.title);
+    $('#bubbletext').html(bubble.text);
+    $('#bubbleowner').html(bubble.user.name);
+    $('#shareButton').click(function (e) {
+        navigator.share(
+            ({
+                title: 'Look!',
+                text: 'Look whats happening',
+                url: window.location.origin + '/deeplink/' + (bubble.id),
+            })
+            //'Look whats happening',window.location.origin+'/deeplink/'+(bubble.id))
+        )
+    });
+    (userid === bubble.userid) ? $('#vote_buttons').hide() : $('#vote_buttons').show();
+    console.log(bubble.user.name)
+    document.getElementById("BigBubble").style.display = "block";
+
+}
 addMarker = function (bubble){
 
     position = new google.maps.LatLng(bubble.longitude, bubble.latitude);
@@ -151,23 +175,14 @@ addMarker = function (bubble){
     bubblezize = (70 * votesmultiplier) - (zoommultiplier *70);
     var marker = new google.maps.Marker({
         position: position,
-        icon: {url:'img/bubble.svg', scaledSize: new google.maps.Size(bubblezize, bubblezize)},
+        icon: {url:'/img/bubble.svg', scaledSize: new google.maps.Size(bubblezize, bubblezize)},
         opacity: 1,
         label: {color: '#000000', fontWeight: 'normal', fontSize: (votesmultiplier * 6) -(zoommultiplier*6)+'px', text: bubble.title},
         optimized: true,
         map: map
     });
     marker.addListener('dblclick', function () {
-        //marker.setMap(null);
-        activemarkerid = bubble.id;
-        //map.setZoom(16);
-        map.panTo(marker.position);
-        map.panBy(10,-200);
-        $('#bubbletitle').html(bubble.title);
-        $('#bubbletext').html(bubble.text);
-        $('#bubbleowner').html(bubble.user.name);
-        console.log(bubble.user.name)
-        document.getElementById("BigBubble").style.display = "block";
+        markerOnDblClick(bubble);
     });
     return marker;
 
@@ -265,7 +280,7 @@ drawTheMap = function drawTheMap() {
         center: new google.maps.LatLng(52.364061, 4.882769),
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        disableDefaultUI: false,
+        disableDefaultUI: true,
         gestureHandling: "greedy",
         draggableCursor: 'crosshair',
         styles: [
@@ -393,6 +408,13 @@ drawTheMap = function drawTheMap() {
                     {
                         "color": "#3d28e2"
                     }
+                ]
+            },
+            {
+                "featureType": "poi.business",
+                "elementType": "labels",
+                "stylers": [
+                    { "visibility": "off" }
                 ]
             }
         ]

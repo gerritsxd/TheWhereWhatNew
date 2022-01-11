@@ -22,7 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/deeplink/{id}', [App\Http\Controllers\HomeController::class, 'deepLink']);
 Route::get('/addbubble/', [App\Http\Controllers\BubbleController::class, 'addBubble'])->middleware('verified');
 Route::get('/getbubbles/', [App\Http\Controllers\BubbleController::class, 'getBubbles']);
 

@@ -33,10 +33,11 @@
             <br>
             <div id="bubbletext" class="bigbubbleform_horizontal bigbubbletext"></div>
             <div id="bubbleowner" class="bigbubbleform_horizontal bigbubbleredtext"></div>
+            <div id="shareButton" class="bigbubbleredtext"><img src="/img/share.svg" width="24" id="shareButton"></div>
             <div class="form-group">
 
             </div>
-            <div class="vote-buttons">
+            <div class="vote-buttons" id="vote_buttons" style="display: none;">
                 <img src="/img/down.svg" width="100" id="downvote">
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -73,6 +74,10 @@
             addNewBubbles(getNewBubbles(loadedbubbles, orgbubbles));
             removeObseleteBubbles(getObseleteBubbles(loadedbubbles, orgbubbles));
             updateChangedBubbles(getChangedBubbles(loadedbubbles, orgbubbles));
+            @isset($bubble)
+                markerOnDblClick(@json($bubble));
+            @endisset
+
         }
 
         function resizeMarkers(){
@@ -115,9 +120,9 @@
 
         jQuery(document).ready(function () {
             loadBubbles();
-            setInterval(function () {
-                loadBubbles()
-            }, 1000);
+//            setInterval(function () {
+//                loadBubbles()
+//            }, 1000);
             $('#BigBubble').click(function(e) {
                 $('#BigBubble').hide();
                 loadBubbles();
@@ -144,10 +149,12 @@
             $('#bubble-cancel').click(function(e) {
                 $('#inputBigBubble').hide();
             })
+
         });
         @auth
             userid = {{Auth::id()}};
         @endauth
+
 
 
     </script>
