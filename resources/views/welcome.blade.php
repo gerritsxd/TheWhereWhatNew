@@ -83,8 +83,6 @@
                 deeplinkexecuted = true;
                 markerOnDblClick(@json($bubble));
             }
-            @else
-                checkGeolocation();
             @endif
 
         }
@@ -131,6 +129,9 @@
 
 function setupMapAndBubbles(){
     drawTheMap();
+    @if(!isset($bubble))
+    checkGeolocation();
+    @endif
     setInterval(function () {
         loadBubbles()
     }, 1000);
