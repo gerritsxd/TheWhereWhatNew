@@ -61,6 +61,7 @@
         var markers = [];
         var userid;
         var map;
+        var deeplinkexecuted = false;
 
 
         function loadBubbles() {
@@ -75,8 +76,14 @@
             addNewBubbles(getNewBubbles(loadedbubbles, orgbubbles));
             removeObseleteBubbles(getObseleteBubbles(loadedbubbles, orgbubbles));
             updateChangedBubbles(getChangedBubbles(loadedbubbles, orgbubbles));
+
             @isset($bubble)
+
+            if (!deeplinkexecuted) {
+                deeplinkexecuted = true;
                 markerOnDblClick(@json($bubble));
+            }
+
             @endisset
 
         }
@@ -121,9 +128,9 @@
 
         jQuery(document).ready(function () {
             loadBubbles();
-//            setInterval(function () {
-//                loadBubbles()
-//            }, 1000);
+            setInterval(function () {
+                loadBubbles()
+            }, 1000);
             $('#BigBubble').click(function(e) {
                 $('#BigBubble').hide();
                 loadBubbles();
