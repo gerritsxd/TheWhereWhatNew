@@ -141,6 +141,6 @@
     </div>
     @yield('scripts')
 </body>
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0&callback=drawTheMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0&callback=resolvePromise"></script>
 
 </html>

@@ -437,7 +437,7 @@ drawTheMap = function drawTheMap() {
         resizeMarkers();
     })
     addWhereAmIbutton();
-    checkGeolocation();
+
 
 
 

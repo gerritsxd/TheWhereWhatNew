@@ -77,14 +77,15 @@
             removeObseleteBubbles(getObseleteBubbles(loadedbubbles, orgbubbles));
             updateChangedBubbles(getChangedBubbles(loadedbubbles, orgbubbles));
 
-            @isset($bubble)
 
+            @if(isset($bubble))
             if (!deeplinkexecuted) {
                 deeplinkexecuted = true;
                 markerOnDblClick(@json($bubble));
             }
-
-            @endisset
+            @else
+                checkGeolocation();
+            @endif
 
         }
 
@@ -118,19 +119,30 @@
 
             marker.setLabel(labelObj)
         }
+        var resolvePromise = null;
+        var promise = new Promise(function(resolve, reject) {
+            resolvePromise = resolve;
+        });
+        promise.then(function() {
+            console.log('loaded');
+            setupMapAndBubbles();
+        });
 
 
-
+function setupMapAndBubbles(){
+    drawTheMap();
+    setInterval(function () {
+        loadBubbles()
+    }, 1000);
+}
 
 
 
 
 
         jQuery(document).ready(function () {
-            loadBubbles();
-            setInterval(function () {
-                loadBubbles()
-            }, 1000);
+
+
             $('#BigBubble').click(function(e) {
                 $('#BigBubble').hide();
                 loadBubbles();
