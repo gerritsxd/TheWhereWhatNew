@@ -31,6 +31,7 @@
         <div class="bigbubbleform_horizontal">
             <div id="bubbletitle" class="bigbubbleform_horizontal bigbubbletitle"></div>
             <br>
+
             <div id="bubbletext" class="bigbubbleform_horizontal bigbubbletext"></div>
             <div id="bubbleowner" class="bigbubbleform_horizontal bigbubbleredtext"></div>
             <div id="shareButton" class="bigbubbleredtext"><img src="/img/share.svg" width="24" id="shareButton"></div>
