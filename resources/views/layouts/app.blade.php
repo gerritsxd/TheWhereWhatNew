@@ -70,6 +70,13 @@
             transform: translate(-50%, -50%);
             margin: 0 auto;
         }
+        .deletbutton{
+            position: fixed;
+            left: 47%;
+            bottom: 80px;
+            
+
+        }
 
 
 

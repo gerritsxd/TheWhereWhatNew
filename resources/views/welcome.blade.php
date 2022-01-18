@@ -34,16 +34,16 @@
 
             <div id="bubbletext" class="bigbubbleform_horizontal bigbubbletext"></div>
             <div id="bubbleowner" class="bigbubbleform_horizontal bigbubbleredtext"></div>
-            <div id="deleteButton" class="bigbubbleredtext"><img src="/img/delete.svg" width="24" id="deleteButton"></div>
+            <div id="deleteButton" class="deletbutton"><img src="/img/delete.svg" width="24" id="deleteButton"></div>
             <div id="shareButton" class="bigbubbleredtext"><img src="/img/share.svg" width="24" id="shareButton"></div>
             <div class="form-group">
 
             </div>
             <div class="vote-buttons" id="vote_buttons" style="display: none;">
-                <img src="/img/down.svg" width="100" id="downvote">
+                <img src="/img/downvote.svg" width="24" id="downvote">
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="/img/up.svg" width="100" id="upvote">
+                <img src="/img/upvote.svg" width="24" id="upvote">
             </div>
 
 
