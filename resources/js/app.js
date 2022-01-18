@@ -77,7 +77,8 @@ addNewBubbles = function (bubbles){
 removeObseleteBubbles = function (bubbles){
     $.each(bubbles,function(index){
         removeMarker(bubbles[index].id);
-        orgbubbles.splice(bubbles[index].indexOf(bubbles[index].id),1)
+        orgbubbles.splice(bubbles.indexOf(bubbles[index].id),1)
+        markers.splice(markers.indexOf(markers[index].id),1)
     })
 }
 
@@ -125,8 +126,13 @@ saveMarker = function(title,text, lat, long) {
         data: {userid: userid, title:title, text: text, lat: lat, long: long},
         statusCode: {
             403: function() {
+                alert('your email has to be verified');
                 window.location.href = "/email/verify";
-            }},
+            },
+        401: function(){
+            alert('you have to log in');
+            window.location.href = "/login";
+        }},
         success: function (data) {
 
 
@@ -163,6 +169,7 @@ markerOnDblClick = function (bubble) {
         )
     });
     (userid === bubble.userid) ? $('#vote_buttons').hide() : $('#vote_buttons').show();
+    (userid === bubble.userid) ? $('#deleteButton').show() : $('#deleteButton').hide();
     console.log(bubble.user.name)
     document.getElementById("BigBubble").style.display = "block";
 
@@ -197,7 +204,42 @@ voteBubble = function (vote){
         data: {userid: userid, id:activemarkerid , vote:vote},
         statusCode: {
             403: function() {
+                alert('your email has to be verified');
+
                 window.location.href = "/email/verify";
+            },
+            401: function(){
+                alert('you have to log in');
+                window.location.href = "/login";
+            }},
+        success: function (data) {
+            console.log(data);
+
+        },
+        fail: function(xhr, textStatus, errorThrown){
+            alert('request failed');
+        }
+    });
+
+}
+
+deleteBubble = function(){
+
+
+    $.ajax({
+        url: '/deletebubble/',
+        type: "GET",
+        dataType: "json",
+        data: {bubbleid: activemarkerid},
+        statusCode: {
+            403: function() {
+                alert('your email has to be verified');
+
+                window.location.href = "/email/verify";
+            },
+            401: function(){
+                alert('you have to log in');
+                window.location.href = "/login";
             }},
         success: function (data) {
             console.log(data);

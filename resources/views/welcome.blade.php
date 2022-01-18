@@ -34,6 +34,7 @@
 
             <div id="bubbletext" class="bigbubbleform_horizontal bigbubbletext"></div>
             <div id="bubbleowner" class="bigbubbleform_horizontal bigbubbleredtext"></div>
+            <div id="deleteButton" class="bigbubbleredtext"><img src="/img/delete.svg" width="24" id="deleteButton"></div>
             <div id="shareButton" class="bigbubbleredtext"><img src="/img/share.svg" width="24" id="shareButton"></div>
             <div class="form-group">
 
@@ -50,6 +51,7 @@
 
 
     </div>
+
 
 
 @endsection
@@ -74,8 +76,9 @@
 
         function prepareBubbles() {
             addNewBubbles(getNewBubbles(loadedbubbles, orgbubbles));
-            removeObseleteBubbles(getObseleteBubbles(loadedbubbles, orgbubbles));
             updateChangedBubbles(getChangedBubbles(loadedbubbles, orgbubbles));
+            removeObseleteBubbles(getObseleteBubbles(loadedbubbles, orgbubbles));
+
 
 
             @if(isset($bubble))
@@ -147,6 +150,9 @@ function setupMapAndBubbles(){
             $('#BigBubble').click(function(e) {
                 $('#BigBubble').hide();
                 loadBubbles();
+            })
+            $('#deleteButton').click(function(e){
+                deleteBubble();
             })
 
             $('#upvote').click(function(e) {

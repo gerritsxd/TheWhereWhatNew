@@ -26,6 +26,7 @@ class CreateBubblesTable extends Migration
             $table->integer('multiplier')->nullable();
             $table->integer('numcomments')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
         });
     }

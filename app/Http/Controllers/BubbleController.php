@@ -132,4 +132,11 @@ class BubbleController extends Controller
         return $bubble;
 
     }
+
+    public function deleteBubble(Request $request){
+        //Log::debug('enter delete');
+        $bubble = Bubble::find($request->get('bubbleid'));
+        $bubble->delete();
+        return "SUCCESS";
+    }
 }
