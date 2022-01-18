@@ -5367,8 +5367,13 @@ addNewBubbles = function addNewBubbles(bubbles) {
 removeObseleteBubbles = function removeObseleteBubbles(bubbles) {
   $.each(bubbles, function (index) {
     removeMarker(bubbles[index].id);
-    orgbubbles.splice(bubbles.indexOf(bubbles[index].id), 1);
-    markers.splice(markers.indexOf(markers[index].id), 1);
+    orgbubbles = orgbubbles.filter(function (el) {
+      return el.id != bubbles[index].id;
+    }); //orgbubbles.splice(bubbles.indexOf(bubbles[index].id),1)
+
+    markers = markers.filter(function (el) {
+      return el.currentbubbleID != bubbles[index].id;
+    });
   });
 };
 

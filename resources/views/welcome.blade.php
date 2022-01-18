@@ -75,9 +75,11 @@
 
 
         function prepareBubbles() {
-            addNewBubbles(getNewBubbles(loadedbubbles, orgbubbles));
-            updateChangedBubbles(getChangedBubbles(loadedbubbles, orgbubbles));
-            removeObseleteBubbles(getObseleteBubbles(loadedbubbles, orgbubbles));
+            if(!(JSON.stringify(loadedbubbles) === JSON.stringify(orgbubbles))) {
+                addNewBubbles(getNewBubbles(loadedbubbles, orgbubbles));
+                updateChangedBubbles(getChangedBubbles(loadedbubbles, orgbubbles));
+                removeObseleteBubbles(getObseleteBubbles(loadedbubbles, orgbubbles));
+            }
 
 
 
