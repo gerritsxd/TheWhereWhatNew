@@ -81,6 +81,7 @@ removeObseleteBubbles = function (bubbles){
         //orgbubbles.splice(bubbles.indexOf(bubbles[index].id),1)
         markers = markers.filter(function(el) { return el.currentbubbleID != bubbles[index].id; });
     })
+
 }
 
 changeMarker = function (bubble){
