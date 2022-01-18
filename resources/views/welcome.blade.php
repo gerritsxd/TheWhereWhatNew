@@ -64,6 +64,7 @@
         var userid;
         var map;
         var deeplinkexecuted = false;
+        var largestbubblesize = 0;
 
 
         function loadBubbles() {
@@ -76,6 +77,13 @@
 
         function prepareBubbles() {
             if(!(JSON.stringify(loadedbubbles) === JSON.stringify(orgbubbles))) {
+                    $.each(loadedbubbles,function(index){
+                       bubblesize = loadedbubbles[index].upvotes - loadedbubbles[index].downvotes;
+                        if((bubblesize)>largestbubblesize ){
+                            largestbubblesize = bubblesize;
+                        }
+                    })
+                console.log('LARGETS:'+largestbubblesize);
                 addNewBubbles(getNewBubbles(loadedbubbles, orgbubbles));
                 updateChangedBubbles(getChangedBubbles(loadedbubbles, orgbubbles));
                 removeObseleteBubbles(getObseleteBubbles(loadedbubbles, orgbubbles));
@@ -115,7 +123,7 @@
             )
             var labelObj = {};
             var label = marker.getLabel().text;
-            var fontsize = (votesmultiplier * 6) -(zoommultiplier*6) +"px";
+            var fontsize =  (votesmultiplier * 6) -(zoommultiplier*6)<0?0:(votesmultiplier * 6) -(zoommultiplier*6) +"px";
             console.log('font: '+fontsize);
             labelObj.fontSize =fontsize;
             labelObj.text=label;
