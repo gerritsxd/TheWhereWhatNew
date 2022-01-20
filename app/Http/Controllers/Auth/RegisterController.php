@@ -58,6 +58,14 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function showRegistrationForm(Request $request)
+    {
+        $invitation_code =is_null($request->invitation_code)?'': $request->invitation_code;
+
+        $invitation_code_valid = InvitationCode::where('invitation_code',$invitation_code)->where('used',false)->get();
+
+        return view('auth.register',compact('invitation_code_valid'));
+    }
     /**
      * Create a new user instance after a valid registration.
      *
@@ -80,6 +88,7 @@ class RegisterController extends Controller
 
         $used_invitation_code = InvitationCode::where('invitation_code',$data['invitation_code'])->first();
         $used_invitation_code->used = true;
+        $used_invitation_code->user_id = $user->id;
         $used_invitation_code->save();
 
         return $user;
