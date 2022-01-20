@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
-                @if(count($invitation_code_valid) > 0)
+                @if(!empty($invitation_code_valid)&& count($invitation_code_valid) > 0)
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
