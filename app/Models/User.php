@@ -49,4 +49,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Bubble::class,'userid');
     }
+
+    public function hasValidInvitatioCode(){
+        $invitation_codes = InvitationCode::where('user_id',$this->id)->where('used',false)->get();
+        return count($invitation_codes) >0;
+    }
+
 }

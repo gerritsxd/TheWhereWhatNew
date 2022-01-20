@@ -7,6 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
+                @if(count($invitation_code_valid) > 0)
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -61,6 +62,14 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="invitation_code" class="col-md-4 col-form-label text-md-end">{{ __('Invitation Code') }}</label>
+
+                            <div class="col-md-6">
+
+                                <input id="invitation_code" type="text" class="form-control" name="invitation_code" value="{{$invitation_code_valid[0]->invitation_code}}" readonly>
+                            </div>
+                        </div>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -71,6 +80,10 @@
                     </form>
                 </div>
             </div>
+            @else
+                You need an invitation code
+
+            @endif
         </div>
     </div>
 </div>

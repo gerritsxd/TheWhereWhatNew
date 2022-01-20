@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\InvitationCode;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -64,10 +66,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+
+        $invitation_code = new InvitationCode();
+        $invitation_code->user_id = $user->id;
+        $invitation_code->invitation_code = Str::uuid();
+        $invitation_code->save();
+
+        $used_invitation_code = InvitationCode::where('invitation_code',$data['invitation_code'])->first();
+        $used_invitation_code->used = true;
+        $used_invitation_code->save();
+
+        return $user;
     }
 }

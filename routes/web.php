@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InvitationCodeController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ Route::get('/addbubble/', [App\Http\Controllers\BubbleController::class, 'addBub
 Route::get('/votebubble',[App\Http\Controllers\BubbleController::class, 'voteBubble'])->middleware('auth')->middleware('verified');
 
 Route::get('/deletebubble',[App\Http\Controllers\BubbleController::class, 'deleteBubble'])->middleware('auth')->middleware('verified');
-
+Route::get('/invite',[InvitationCodeController::class,'invite'])->middleware('auth')->middleware('verified')->name('invite');
 
 Route::get('/email/verify', function () {    return view('auth.verify');})->middleware('auth')->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) { $request->fulfill();return redirect('/home');})->middleware(['auth', 'signed'])->name('verification.verify');
