@@ -319,7 +319,7 @@ checkGeolocation = function (){
 
 
 }
-drawTheMap = function drawTheMap() {
+drawTheMap = function () {
     var mapProp = {
         center: new google.maps.LatLng(52.364061, 4.882769),
         zoom: 14,

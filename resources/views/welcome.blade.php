@@ -155,7 +155,7 @@ function setupMapAndBubbles(){
 
 
         jQuery(document).ready(function () {
-
+            drawTheMap();
 
             $('#BigBubble').click(function(e) {
                 $('#BigBubble').hide();
@@ -188,6 +188,7 @@ function setupMapAndBubbles(){
             })
 
         });
+
         @auth
             userid = {{Auth::id()}};
         @endauth

@@ -10,7 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js?01171055') }}" defer></script>
+    <script src="{{ asset('js/app.js?01241055') }}" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -151,13 +152,15 @@
             </div>
         </nav>
 
-        <main class="py-4">
+
             @yield('content')
-        </main>
+
 
     </div>
+
+    @include('cookie-consent::index')
     @yield('scripts')
 </body>
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0&callback=resolvePromise"></script>
+
 
 </html>
