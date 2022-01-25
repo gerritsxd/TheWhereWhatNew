@@ -19,6 +19,25 @@
 
     <!-- Styles -->
     <style>
+        .instructionbubble{
+            background-color: whitesmoke;
+            position:absolute;
+            left:10px;
+            top: 10px;
+            z-index:3;
+            width: 500px;
+            height: 500px;
+
+            border: 2px solid #000;
+            border-radius: 15px;
+            -moz-border-radius: 15px;
+            background-size: 500px;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+        }
         .inputbigbubble{
             position:absolute;
             left:10px;
@@ -158,7 +177,7 @@
 
     </div>
 
-    @include('cookie-consent::index')
+
     @yield('scripts')
 </body>
 
