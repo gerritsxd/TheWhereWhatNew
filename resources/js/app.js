@@ -484,5 +484,4 @@ drawTheMap = function () {
 
 
 
-
 }

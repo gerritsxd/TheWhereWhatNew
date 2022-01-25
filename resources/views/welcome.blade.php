@@ -2,6 +2,25 @@
 @section('content')
 
     <div id="googleMap"></div>
+    <div id="instructions" class="instructionbubble " style="display: none;">
+        <div class="bigbubbletitle"><br>How to use TheWhereWhat:<br><br><br></div>
+        <div class="bigbubbleform_horizontal bigbubbletext">
+        1. Register with your invitation code and verify your email address.<br>
+        2. Drag across the screen to move around the map or click “Find me” to go to your
+        location (Location must be ON on your browser).<br>
+        3. Double click on the screen to write your own bubble. Try to summarise the nature of
+        your activity on the title, as characters are limited. You can explain the activity in
+        more depth in the description box.<br>
+        4. Double click on bubbles to interact with them. If you wrote the bubble, you will be
+        allowed to share it or delete it. If the bubble was placed by another user, you will be
+        able to upvote it, downvote it and share it.<br>
+        5. Have fun and stay safe.<br><br>
+
+            <a class="bigbubbleform_horizontal btn btn-outline-primary" id="instructionsButton">Agree to Cookies and Close</a>
+        </div>
+    </div>
+
+    </div>
     <div id="inputBigBubble" class="inputbigbubble" style="display: none;">
         <br><br><br><br><br><br>
         <div class="bigbubbletitle">Share what's happening</div>
@@ -156,6 +175,14 @@ function setupMapAndBubbles(){
 
         jQuery(document).ready(function () {
             drawTheMap();
+            @guest
+            if (!cookieExists('COOKIE_NAME'))$('#instructions').show();
+            @endguest
+
+            $('#instructionsButton').click(function(){
+                $('#instructions').hide();
+                consentWithCookies();
+            })
 
             $('#BigBubble').click(function(e) {
                 $('#BigBubble').hide();
@@ -187,11 +214,55 @@ function setupMapAndBubbles(){
                 $('#inputBigBubble').hide();
             })
 
+
         });
 
         @auth
             userid = {{Auth::id()}};
         @endauth
+
+
+
+            const COOKIE_VALUE = 1;
+            const COOKIE_DOMAIN = window.location.host;
+
+
+        const COOKIE_NAME ='cookieConsent'
+
+            function consentWithCookies() {
+                setCookie(COOKIE_NAME, COOKIE_VALUE, 365 * 20);
+
+            }
+
+            function cookieExists(name) {
+                return (document.cookie.split('; ').indexOf(name + '=' + COOKIE_VALUE) !== -1);
+            }
+
+
+
+            function setCookie(name, value, expirationInDays) {
+                const date = new Date();
+                date.setTime(date.getTime() + (expirationInDays * 24 * 60 * 60 * 1000));
+                mycookie = name + '=' + value
+                    + ';expires=' + date.toUTCString()
+                    + ';domain=' + COOKIE_DOMAIN
+                    + ';path=/{{ config('session.secure') ? ';secure' : null }}'
+                    + '{{ config('session.same_site') ? ';samesite='.config('session.same_site') : null }}';
+
+                document.cookie = mycookie;
+
+
+            }
+
+            if (cookieExists('COOKIE_NAME')) {
+                hideCookieDialog();
+            }
+
+
+
+
+
+
 
 
 
