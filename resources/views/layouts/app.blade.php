@@ -25,7 +25,7 @@
             left:10px;
             top: 10px;
             z-index:3;
-            width: 500px;
+            width: 400px;
             height: 500px;
 
             border: 2px solid #000;
