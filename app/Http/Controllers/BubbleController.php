@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBubbleRequest;
 use App\Http\Requests\UpdateBubbleRequest;
 use App\Models\Bubble;
+use App\Models\UserVote;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
@@ -35,7 +37,7 @@ class BubbleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreBubbleRequest  $request
+     * @param  \App\Http\Requests\StoreBubbleRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreBubbleRequest $request)
@@ -46,7 +48,7 @@ class BubbleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Bubble  $bubble
+     * @param  \App\Models\Bubble $bubble
      * @return \Illuminate\Http\Response
      */
     public function show(Bubble $bubble)
@@ -57,7 +59,7 @@ class BubbleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Bubble  $bubble
+     * @param  \App\Models\Bubble $bubble
      * @return \Illuminate\Http\Response
      */
     public function edit(Bubble $bubble)
@@ -68,8 +70,8 @@ class BubbleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateBubbleRequest  $request
-     * @param  \App\Models\Bubble  $bubble
+     * @param  \App\Http\Requests\UpdateBubbleRequest $request
+     * @param  \App\Models\Bubble $bubble
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateBubbleRequest $request, Bubble $bubble)
@@ -80,7 +82,7 @@ class BubbleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Bubble  $bubble
+     * @param  \App\Models\Bubble $bubble
      * @return \Illuminate\Http\Response
      */
     public function destroy(Bubble $bubble)
@@ -88,7 +90,8 @@ class BubbleController extends Controller
         //
     }
 
-    public function addBubble(Request $request){
+    public function addBubble(Request $request)
+    {
 
         $bubble = new Bubble();
 
@@ -106,34 +109,40 @@ class BubbleController extends Controller
         return ('SUCCESS');
 
 
-
-
     }
 
-    public function getBubbles(){
+    public function getBubbles()
+    {
         $bubbles = Bubble::where('updated_at', '>', Carbon::now()->subHours(24)->toDateTimeString())->with('user')->get();
         //Log::debug('bubbles:'.$bubbles[0]->user);
         return $bubbles;
 
 
-
     }
 
-    public function voteBubble(Request $request){
+    public function voteBubble(Request $request)
+    {
 
         $bubble = Bubble::find($request->get('id'));
-        if($request->get('vote')>0){
-            $bubble->increment('upvotes');
-        }else{
-            $bubble->increment('downvotes');
-        }
-        //$bubble->save();
+        if (UserVote::where('user_id', Auth::user()->id)->where('bubble_id', $bubble->id)->exists()) {
+            return 'false';
+        } else {
+            if ($request->get('vote') > 0) {
+                $bubble->increment('upvotes');
+                $userVote = new UserVote(['user_id' => Auth::user()->id, 'bubble_id' => $bubble->id, 'upvote' => true]);
+            } else {
+                $bubble->increment('downvotes');
+                $userVote = new UserVote(['user_id' => Auth::user()->id, 'bubble_id' => $bubble->id, 'upvote' => false]);
+            }
 
-        return $bubble;
+            $userVote->save();
+            return 'true';
+        }
 
     }
 
-    public function deleteBubble(Request $request){
+    public function deleteBubble(Request $request)
+    {
         //Log::debug('enter delete');
         $bubble = Bubble::find($request->get('bubbleid'));
         $bubble->delete();

@@ -5,6 +5,7 @@
  */
 require('./sw.js');
 require('./bootstrap');
+window.swall =require('sweetalert');
 
 
 window.Vue = require('vue').default;
@@ -205,6 +206,13 @@ voteBubble = function (vote){
         dataType: "json",
         data: {userid: userid, id:activemarkerid , vote:vote},
         statusCode: {
+            200:function(data) {
+
+                console.log(data);
+                if(data === false){
+                    swall('Already voted');
+                }
+            },
             403: function() {
                 alert('your email has to be verified');
 
@@ -235,7 +243,7 @@ deleteBubble = function(){
         data: {bubbleid: activemarkerid},
         statusCode: {
             403: function() {
-                alert('your email has to be verified');
+                swall('new email','your email has to be verified','error');
 
                 window.location.href = "/email/verify";
             },
@@ -278,7 +286,7 @@ addWhereAmIbutton = function() {
                         lng: position.coords.longitude,
                     };
 
-
+                    map.setZoom(17);
                     map.setCenter(pos);
                 },
                 () => {
