@@ -149,14 +149,7 @@
 
             marker.setLabel(labelObj)
         }
-        var resolvePromise = null;
-        var promise = new Promise(function(resolve, reject) {
-            resolvePromise = resolve;
-        });
-        promise.then(function() {
-            console.log('loaded');
-            setupMapAndBubbles();
-        });
+
 
 
 function setupMapAndBubbles(){
@@ -174,10 +167,10 @@ function setupMapAndBubbles(){
 
 
         jQuery(document).ready(function () {
-            drawTheMap();
-            @guest
-            if (!cookieExists('COOKIE_NAME'))$('#instructions').show();
-            @endguest
+            setupMapAndBubbles();
+
+            if (!cookieExists(COOKIE_NAME)){$('#instructions').show()}
+
 
             $('#instructionsButton').click(function(){
                 $('#instructions').hide();
