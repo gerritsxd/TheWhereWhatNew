@@ -142,7 +142,7 @@
             )
             var labelObj = {};
             var label = marker.getLabel().text;
-            var fontsize =  (votesmultiplier * 6) -(zoommultiplier*6)<0?0:(votesmultiplier * 6) -(zoommultiplier*6) +"px";
+            var fontsize =  (votesmultiplier * 6) -(zoommultiplier*6)<0?0+"px":(votesmultiplier * 6) -(zoommultiplier*6) +"px";
             console.log('font: '+fontsize);
             labelObj.fontSize =fontsize;
             labelObj.text=label;

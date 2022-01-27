@@ -166,7 +166,7 @@ markerOnDblClick = function (bubble) {
             ({
                 title: 'Look!',
                 text: 'Look whats happening',
-                url: window.location.origin + '/deeplink/' + (bubble.id),
+                url: window.location.origin + '/deeplink/' + activemarkerid,
             })
             //'Look whats happening',window.location.origin+'/deeplink/'+(bubble.id))
         )
