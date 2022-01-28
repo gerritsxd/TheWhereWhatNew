@@ -185,7 +185,7 @@ markerOnDblClick = function (bubble) {
         .done(function() {
             // Do something now you know the image exists.
             $('#bubbletext').empty();
-            $('#imagediv').prepend('<img id="theImg" src="'+imagesrc+'" />');
+            $('#imagediv').html('<img id="theImg" src="'+imagesrc+'" />');
 
         }).fail(function() {
         // Image doesn't exist - do something else.
