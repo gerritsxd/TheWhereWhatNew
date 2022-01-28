@@ -77,7 +77,7 @@
                         success: function (data) {
                             $("#upload-success").html("Images cropped and uploaded successfully.");
                             $("#upload-success").show();
-
+                            window.history.go(-1);
 
                         }
                     });

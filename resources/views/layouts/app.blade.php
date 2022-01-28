@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js?01271055') }}" defer></script>
+    <script src="{{ asset('js/app.js?01281055') }}" defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0"></script>
 
     <!-- Fonts -->

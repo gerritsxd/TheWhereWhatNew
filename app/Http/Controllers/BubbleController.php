@@ -169,8 +169,6 @@ class BubbleController extends Controller
 
         Storage::put("public/{$imageName}.png",  $data);
        // $request->image->move(public_path('images'), $imageName);
-        return back()
-            ->with('success','You have successfully upload image.')
-            ->with('image',$imageName);
+        return 'SUCCES';
     }
 }
