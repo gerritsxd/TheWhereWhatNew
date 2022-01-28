@@ -7,9 +7,12 @@ use App\Http\Requests\UpdateBubbleRequest;
 use App\Models\Bubble;
 use App\Models\UserVote;
 use Carbon\Carbon;
+use function compact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class BubbleController extends Controller
@@ -106,7 +109,7 @@ class BubbleController extends Controller
         $bubble->bubble_type = 1;
         $bubble->save();
 
-        return ('SUCCESS');
+        return ($bubble->id);
 
 
     }
@@ -147,5 +150,27 @@ class BubbleController extends Controller
         $bubble = Bubble::find($request->get('bubbleid'));
         $bubble->delete();
         return "SUCCESS";
+    }
+
+    public function startCropImage(Request $request){
+        $bubbleID =$request->bubbleID;
+        return view('cropimage',compact('bubbleID'));
+    }
+
+    public function cropImage(Request $request){
+
+        $imageName = $request->bubbleID;
+        Log::debug("Storing image");
+        Log::debug("Storing image:"."/{$imageName}.png");
+        $img = $request->image;
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+
+        Storage::put("public/{$imageName}.png",  $data);
+       // $request->image->move(public_path('images'), $imageName);
+        return back()
+            ->with('success','You have successfully upload image.')
+            ->with('image',$imageName);
     }
 }

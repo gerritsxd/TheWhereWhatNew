@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\BubbleController;
 use App\Http\Controllers\InvitationCodeController;
+use App\Models\Bubble;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -26,6 +28,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/deeplink/{id}', [App\Http\Controllers\HomeController::class, 'deepLink']);
 Route::get('/getbubbles/', [App\Http\Controllers\BubbleController::class, 'getBubbles']);
 Route::get('/addbubble/', [App\Http\Controllers\BubbleController::class, 'addBubble'])->middleware('auth')->middleware('verified');
+Route::get('/cropImage',[BubbleController::class,'startCropImage']);
+Route::post('/cropImage',[BubbleController::class,'cropImage']);
+
 Route::get('/votebubble',[App\Http\Controllers\BubbleController::class, 'voteBubble'])->middleware('auth')->middleware('verified');
 
 Route::get('/deletebubble',[App\Http\Controllers\BubbleController::class, 'deleteBubble'])->middleware('auth')->middleware('verified');

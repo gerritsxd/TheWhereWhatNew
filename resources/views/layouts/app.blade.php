@@ -66,6 +66,10 @@
             width: 75%;
             margin: 0 auto;
         }
+        .bigbubble_image{
+            width: 55%;
+            margin: 0 auto;
+        }
         .bigbubbletitle{
             color: black;
             text-align: center;

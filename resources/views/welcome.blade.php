@@ -34,7 +34,7 @@
                 <textarea class="form-control bubble-input" name="bubble-text" id="bubble-text" maxlength="250"
                           placeholder="Description" rows="4"></textarea>
             </div>
-            <div><br></div>
+            <div class="bigbubbletitle"><img src="img/camera.svg" width="45px" id="cameraicon"></div>
             <div class="form-group text-center">
                 <a href="#" class="btn btn-outline-primary btn-rounded" id="bubble-ok">OK</a>
                 <a href="#" class="btn btn-outline-primary" id="bubble-cancel">Cancel</a>
@@ -51,8 +51,12 @@
             <div id="bubbletitle" class="bigbubbleform_horizontal bigbubbletitle"></div>
             <br>
 
-            <div id="bubbletext" class="bigbubbleform_horizontal bigbubbletext"></div>
+                <div class="bigbubble_image" id="imagediv"></div>
+
+                <div id="bubbletext" class="bigbubbleform_horizontal bigbubbletext"></div>
+
             <div id="bubbleowner" class="bigbubbleform_horizontal bigbubbleredtext"></div>
+
             <div id="deleteButton" class="deletbutton"><img src="/img/delete.svg" width="24" id="deleteButton"></div>
             <div id="shareButton" class="bigbubbleredtext"><img src="/img/share.svg" width="24" id="shareButton"></div>
             <div class="form-group">
@@ -200,7 +204,29 @@ function setupMapAndBubbles(){
             $('#bubble-ok').click(function(e) {
                 var bubbletitle = $('#bubble-title').val();
                 var bubbletext = $('#bubble-text').val();
-                createNewMarker(bubbletitle,bubbletext);
+                if (bubbletitle.length < 1 || bubbletext.length < 1) {
+                    swall('You need a title, and text.');
+                    return;
+                }
+                saveMarker(bubbletitle, bubbletext, bubblepos.lng, bubblepos.lat).then(
+
+                )
+               // createNewMarker(bubbletitle,bubbletext);
+                $('#inputBigBubble').hide();
+            })
+            $('#cameraicon').click(function (e) {
+                var bubbletitle = $('#bubble-title').val();
+                var bubbletext = $('#bubble-text').val();
+                if (bubbletitle.length < 1 || bubbletext.length < 1) {
+                    swall('You need a title, and text.');
+                    return;
+                }
+                saveMarker(bubbletitle, bubbletext, bubblepos.lng, bubblepos.lat).then(
+                    function(value){
+                        window.location.href = "/cropImage?bubbleID="+value;
+                    }
+                )
+                //createNewMarker(bubbletitle,bubbletext);
                 $('#inputBigBubble').hide();
             })
             $('#bubble-cancel').click(function(e) {

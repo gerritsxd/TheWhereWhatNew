@@ -5,8 +5,7 @@
  */
 require('./sw.js');
 require('./bootstrap');
-window.swall =require('sweetalert');
-
+window.swall = require('sweetalert');
 
 window.Vue = require('vue').default;
 
@@ -34,64 +33,79 @@ const app = new Vue({
 });
 
 
-getObseleteBubbles = function (loadedbubbles,orgbubbles){
+getObseleteBubbles = function (loadedbubbles, orgbubbles) {
     var obsolete_bubbles = [];
     $.each(orgbubbles, function (index) {
-        if(loadedbubbles.some(bubble => bubble.id === orgbubbles[index].id)){}else{obsolete_bubbles.push(orgbubbles[index])};
+        if (loadedbubbles.some(bubble => bubble.id === orgbubbles[index].id)) {
+        } else {
+            obsolete_bubbles.push(orgbubbles[index])
+        }
+        ;
     });
     return obsolete_bubbles;
 }
 
-getNewBubbles = function (loadedbubbles,orgbubbles){
-    var new_bubbles =[];
-    $.each(loadedbubbles,function(index){
-        if(orgbubbles.some(bubble => bubble.id === loadedbubbles[index].id)){}else{new_bubbles.push(loadedbubbles[index])};
+getNewBubbles = function (loadedbubbles, orgbubbles) {
+    var new_bubbles = [];
+    $.each(loadedbubbles, function (index) {
+        if (orgbubbles.some(bubble => bubble.id === loadedbubbles[index].id)) {
+        } else {
+            new_bubbles.push(loadedbubbles[index])
+        }
+        ;
     })
     return new_bubbles;
 }
 
-getChangedBubbles = function (loadedbubbles,orgbubbles){
+getChangedBubbles = function (loadedbubbles, orgbubbles) {
     changed_bubbles = [];
-    $.each(loadedbubbles,function(index){
-        if(JSON.stringify(loadedbubbles[index])===JSON.stringify(orgbubbles[index])){}else{changed_bubbles.push(loadedbubbles[index])}
+    $.each(loadedbubbles, function (index) {
+        if (JSON.stringify(loadedbubbles[index]) === JSON.stringify(orgbubbles[index])) {
+        } else {
+            changed_bubbles.push(loadedbubbles[index])
+        }
     })
     return changed_bubbles;
 }
-updateChangedBubbles = function (bubbles){
-    $.each(bubbles,function(index){
+updateChangedBubbles = function (bubbles) {
+    $.each(bubbles, function (index) {
         changeMarker(bubbles[index]);
-        var orgbubbleid = orgbubbles.findIndex(orgbubble => orgbubble.id===bubbles[index].id);
+        var orgbubbleid = orgbubbles.findIndex(orgbubble => orgbubble.id === bubbles[index].id);
         orgbubbles[orgbubbleid] = bubbles[index];
     })
 
 }
 
-addNewBubbles = function (bubbles){
-    $.each(bubbles,function(index){
+addNewBubbles = function (bubbles) {
+    $.each(bubbles, function (index) {
         currentbubbleID = bubbles[index].id;
         let marker = addMarker(bubbles[index]);
-        markers.push({currentbubbleID,marker});
+        markers.push({currentbubbleID, marker});
         orgbubbles.push(bubbles[index]);
     })
 }
 
-removeObseleteBubbles = function (bubbles){
-    $.each(bubbles,function(index){
+removeObseleteBubbles = function (bubbles) {
+    $.each(bubbles, function (index) {
         removeMarker(bubbles[index].id);
-        orgbubbles = orgbubbles.filter(function(el) { return el.id != bubbles[index].id; });
+        orgbubbles = orgbubbles.filter(function (el) {
+            return el.id != bubbles[index].id;
+        });
         //orgbubbles.splice(bubbles.indexOf(bubbles[index].id),1)
-        markers = markers.filter(function(el) { return el.currentbubbleID != bubbles[index].id; });
+        markers = markers.filter(function (el) {
+            return el.currentbubbleID != bubbles[index].id;
+        });
     })
 
 }
 
-changeMarker = function (bubble){
+changeMarker = function (bubble) {
 
     marker = markers.find(marker => marker.currentbubbleID === bubble.id).marker;
     minbubblesize = 15;
-    votesmultiplier = getvotesmultiplier(bubble.upvotes-bubble.downvotes);
+    votesmultiplier = getvotesmultiplier(bubble.upvotes - bubble.downvotes);
     zoommultiplier = 14 - map.getZoom();
-    bubblezize = (70 * votesmultiplier) - (zoommultiplier *70) < minbubblesize?minbubblesize:(70 * votesmultiplier) - (zoommultiplier *70);
+    bubblezize = (70 * votesmultiplier) - (zoommultiplier * 70) < minbubblesize ? minbubblesize : (70 * votesmultiplier) - (zoommultiplier * 70);
 
     marker.setIcon(
         new google.maps.MarkerImage(
@@ -104,62 +118,80 @@ changeMarker = function (bubble){
     )
     var labelObj = {};
     var label = marker.getLabel().text;
-    var fontsize = (votesmultiplier * 6) -(zoommultiplier*6) +"px";
-    labelObj.fontSize =fontsize+'px';
-    labelObj.text=label;
+    var fontsize = (votesmultiplier * 6) - (zoommultiplier * 6) + "px";
+    labelObj.fontSize = fontsize + 'px';
+    labelObj.text = label;
 
     marker.setLabel(labelObj)
 
 }
 
-removeMarker = function (bubbleID){
-    let obsoletemarker = markers.find(marker=>marker.currentbubbleID === bubbleID);
+removeMarker = function (bubbleID) {
+    let obsoletemarker = markers.find(marker => marker.currentbubbleID === bubbleID);
     obsoletemarker.marker.setMap(null);
     var removeIndex = markers.map(item => item.id).indexOf(bubbleID);
     ~removeIndex && markers.splice(removeIndex, 1);
 
 }
 
-saveMarker = function(title,text, lat, long) {
-
-    $.ajax({
-        url: '/addbubble/',
-        type: "GET",
-        dataType: "json",
-        data: {userid: userid, title:title, text: text, lat: lat, long: long},
-        statusCode: {
-            403: function() {
-                alert('your email has to be verified');
-                window.location.href = "/email/verify";
+saveMarker = function (title, text, lat, long) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: '/addbubble/',
+            type: "GET",
+            dataType: "json",
+            data: {userid: userid, title: title, text: text, lat: lat, long: long},
+            statusCode: {
+                403: function () {
+                    alert('your email has to be verified');
+                    window.location.href = "/email/verify";
+                },
+                401: function () {
+                    alert('you have to log in');
+                    window.location.href = "/login";
+                }
             },
-        401: function(){
-            alert('you have to log in');
-            window.location.href = "/login";
-        }},
-        success: function (data) {
+            success: function (data) {
+                resolve(data);
 
-
-        },
-        fail: function(xhr, textStatus, errorThrown){
-            alert('request failed');
-        }
-    });
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                reject('request failed');
+            }
+        });
+    })
 }
 
-createNewMarker = function (bubbletitle,bubbletext) {
-    map.panTo(bubblepos);
-    saveMarker(bubbletitle, bubbletext,bubblepos.lng, bubblepos.lat);
-
-}
+// createNewMarker = function (bubbletitle, bubbletext) {
+//     map.panTo(bubblepos);
+//     if (bubbletitle.length < 1 || bubbletext.length < 1) {
+//         swall('You need a title, and text.')
+//     } else {
+//         return saveMarker(bubbletitle, bubbletext, bubblepos.lng, bubblepos.lat);
+//     }
+//
+// }
 
 markerOnDblClick = function (bubble) {
 //marker.setMap(null);
     activemarkerid = bubble.id;
     map.setZoom(16);
-    map.panTo( new google.maps.LatLng(bubble.longitude, bubble.latitude));
+    map.panTo(new google.maps.LatLng(bubble.longitude, bubble.latitude));
     map.panBy(10, -200);
     $('#bubbletitle').html(bubble.title);
     $('#bubbletext').html(bubble.text);
+    var imagesrc = '/storage/'+activemarkerid+'.png';
+    $.get(imagesrc)
+        .done(function() {
+            // Do something now you know the image exists.
+            $('#bubbletext').empty();
+            $('#imagediv').prepend('<img id="theImg" src="'+imagesrc+'" />');
+
+        }).fail(function() {
+        // Image doesn't exist - do something else.
+
+
+    })
     $('#bubbleowner').html(bubble.user.name);
     $('#shareButton').click(function (e) {
         navigator.share(
@@ -173,21 +205,26 @@ markerOnDblClick = function (bubble) {
     });
     (userid === bubble.userid) ? $('#vote_buttons').hide() : $('#vote_buttons').show();
     (userid === bubble.userid) ? $('#deleteButton').show() : $('#deleteButton').hide();
-    console.log(bubble.user.name)
+
     document.getElementById("BigBubble").style.display = "block";
 
 }
-addMarker = function (bubble){
+addMarker = function (bubble) {
 
     position = new google.maps.LatLng(bubble.longitude, bubble.latitude);
     zoommultiplier = 14 - map.getZoom();
-    votesmultiplier = votesmultiplier = getvotesmultiplier(bubble.upvotes-bubble.downvotes);
-    bubblezize = (70 * votesmultiplier) - (zoommultiplier *70);
+    votesmultiplier = votesmultiplier = getvotesmultiplier(bubble.upvotes - bubble.downvotes);
+    bubblezize = (70 * votesmultiplier) - (zoommultiplier * 70);
     var marker = new google.maps.Marker({
         position: position,
-        icon: {url:'/img/bubble.svg', scaledSize: new google.maps.Size(bubblezize, bubblezize)},
+        icon: {url: '/img/bubble.svg', scaledSize: new google.maps.Size(bubblezize, bubblezize)},
         opacity: 1,
-        label: {color: '#000000', fontWeight: 'normal', fontSize: (votesmultiplier * 6) -(zoommultiplier*6)+'px', text: bubble.title},
+        label: {
+            color: '#000000',
+            fontWeight: 'normal',
+            fontSize: (votesmultiplier * 6) - (zoommultiplier * 6) + 'px',
+            text: bubble.title
+        },
         optimized: true,
         map: map
     });
@@ -198,42 +235,43 @@ addMarker = function (bubble){
 
 }
 
-voteBubble = function (vote){
+voteBubble = function (vote) {
 
     $.ajax({
         url: '/votebubble/',
         type: "GET",
         dataType: "json",
-        data: {userid: userid, id:activemarkerid , vote:vote},
+        data: {userid: userid, id: activemarkerid, vote: vote},
         statusCode: {
-            200:function(data) {
+            200: function (data) {
 
                 console.log(data);
-                if(data === false){
+                if (data === false) {
                     swall('Already voted');
                 }
             },
-            403: function() {
+            403: function () {
                 alert('your email has to be verified');
 
                 window.location.href = "/email/verify";
             },
-            401: function(){
+            401: function () {
                 alert('you have to log in');
                 window.location.href = "/login";
-            }},
+            }
+        },
         success: function (data) {
             console.log(data);
 
         },
-        fail: function(xhr, textStatus, errorThrown){
+        fail: function (xhr, textStatus, errorThrown) {
             alert('request failed');
         }
     });
 
 }
 
-deleteBubble = function(){
+deleteBubble = function () {
 
 
     $.ajax({
@@ -242,34 +280,35 @@ deleteBubble = function(){
         dataType: "json",
         data: {bubbleid: activemarkerid},
         statusCode: {
-            403: function() {
-                swall('new email','your email has to be verified','error');
+            403: function () {
+                swall('new email', 'your email has to be verified', 'error');
 
                 window.location.href = "/email/verify";
             },
-            401: function(){
+            401: function () {
                 alert('you have to log in');
                 window.location.href = "/login";
-            }},
+            }
+        },
         success: function (data) {
             console.log(data);
 
         },
-        fail: function(xhr, textStatus, errorThrown){
+        fail: function (xhr, textStatus, errorThrown) {
             alert('request failed');
         }
     });
 
 }
 
-getvotesmultiplier = function (n){
+getvotesmultiplier = function (n) {
     var i, s = 0.0;
     for (i = 1; i <= n; i++)
-        s = s + 1/i;
+        s = s + 1 / i;
     return s;
 }
 
-addWhereAmIbutton = function() {
+addWhereAmIbutton = function () {
     const locationButton = document.createElement("button");
     locationButton.backgroundImage = "/img/mylocation.svg";
     locationButton.textContent = "Find me";
@@ -317,13 +356,12 @@ getCoords = function () {
             reject(new Error("Permission API is not supported"))
     )
 }
-checkGeolocation = function (){
-    coords=new google.maps.LatLng(52.364061, 4.882769);
+checkGeolocation = function () {
+    coords = new google.maps.LatLng(52.364061, 4.882769);
     getCoords().then(
-        coords => map.panTo(new google.maps.LatLng(coords.latitude,coords.longitude)),
+        coords => map.panTo(new google.maps.LatLng(coords.latitude, coords.longitude)),
         reject => map.panTo(new google.maps.LatLng(52.364061, 4.882769))
     )
-
 
 
 }
@@ -466,7 +504,7 @@ drawTheMap = function () {
                 "featureType": "poi.business",
                 "elementType": "labels",
                 "stylers": [
-                    { "visibility": "off" }
+                    {"visibility": "off"}
                 ]
             }
         ]
@@ -476,7 +514,7 @@ drawTheMap = function () {
 
         map.setZoom(17);
         map.panTo(e.latLng);
-        map.panBy(10,-200);
+        map.panBy(10, -200);
         bubblepos = e.latLng;
         var inputBigBubble = document.getElementById("inputBigBubble");
         if (inputBigBubble.style.display === "none") {
@@ -485,11 +523,10 @@ drawTheMap = function () {
 
 
     });
-    map.addListener('zoom_changed', function() {
+    map.addListener('zoom_changed', function () {
         resizeMarkers();
     })
     addWhereAmIbutton();
-
 
 
 }
