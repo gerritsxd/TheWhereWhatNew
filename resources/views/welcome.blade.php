@@ -34,7 +34,7 @@
                 <textarea class="form-control bubble-input" name="bubble-text" id="bubble-text" maxlength="250"
                           placeholder="Description" rows="4"></textarea>
             </div>
-            <div class="bigbubbletitle"><img src="img/camera.svg" width="45px" id="cameraicon"></div>
+            <div class="bigbubbletitle"><img src="/img/camera.svg" width="45px" id="cameraicon"></div>
             <div class="form-group text-center">
                 <a href="#" class="btn btn-outline-primary btn-rounded" id="bubble-ok">OK</a>
                 <a href="#" class="btn btn-outline-primary" id="bubble-cancel">Cancel</a>
