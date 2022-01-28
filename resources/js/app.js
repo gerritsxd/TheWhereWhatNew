@@ -189,6 +189,7 @@ markerOnDblClick = function (bubble) {
 
         }).fail(function() {
         // Image doesn't exist - do something else.
+        $('#imagediv').empty();
 
 
     })
