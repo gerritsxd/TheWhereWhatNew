@@ -13,3 +13,86 @@
   max-width: 100%;
   max-height: 100%;
 }
+
+.instructionbubble{
+  background-color: whitesmoke;
+  position:absolute;
+  left:10px;
+  top: 10px;
+  z-index:3;
+  width: 400px;
+  height: 550px;
+
+  border: 2px solid #000;
+  border-radius: 15px;
+  -moz-border-radius: 15px;
+  background-size: 500px;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+.inputbigbubble{
+  position:absolute;
+  left:10px;
+  top: 10px;
+  z-index:3;
+  width: 500px;
+  height: 500px;
+
+  background-image: url("/img/bubbleopaque.svg");
+  background-size: 500px;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+.form-control.bubble-input{
+  background-color: rgba(248, 250, 252, .75);
+  border: none;
+}
+.bigbubbleinputform_horizontal{
+  width: 50%;
+  margin: 0 auto;
+}
+.bigbubbleform_horizontal{
+  width: 75%;
+  margin: 0 auto;
+}
+.bigbubble_image{
+  width: 55%;
+  margin: 0 auto;
+}
+.bigbubbletitle{
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+.bigbubbletext{
+  color: black;
+  font-weight: normal;
+  font-size: 14px;
+}
+.bigbubbleredtext{
+  color: red;
+  text-align: center;
+  font-style: italic;
+  font-size: 12px;
+}
+.vote-buttons{
+  position: fixed;
+  left: 50%;
+  bottom: 80px;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+}
+.deletbutton{
+  position: fixed;
+  left: 47%;
+  bottom: 80px;
+
+
+}

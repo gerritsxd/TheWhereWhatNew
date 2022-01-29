@@ -2,18 +2,31 @@
 
 @section('content')
 
-    <div class="panel panel-info">
-        <div class="panel-heading"></div>
-        <div class="panel-body">
-            <div class="row">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ __('Add Image') }}</div>
+                    <div class="card-body">
+                        <label  class="form-label">Take Photo</label>
+                        <div class="text-center">
+                        <a class="btn btn-primary rounded-pill" id="start-camera"> Start Camera</a>
+                        </div>
+                        <div class="text-center">
+                            <video id="video" width="320" height="240" autoplay></video>
+                        </div>
+                        <div class="text-center">
+                            <a class="btn btn-primary rounded-pill" id="click-photo"><img src="/img/camera.svg"width="32"> Take Shot</a>
+                        </div>
+                        <div><br></div>
+                        <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
                 <div class="text-center">
-                    <div id="upload-demo"></div>
+                    <div id="upload-div"></div>
                 </div>
-                <div class="text-center" >
-                    <strong>Selecionar imagen:</strong>
-                </div>
-                    <div class="text-center" >
-                    <input class="btn btn-success" type="file" id="image_file">
+
+                <label for="formFileSm" class="form-label">Or use image</label>
+                <input class="form-control form-control-sm" id="image_file" type="file">
+
                 </div>
                 <div class="text-center" >
                     <button class="btn btn-primary btn-block upload-image" style="margin-top:2%">Guardar Imagen</button>
@@ -21,8 +34,10 @@
 
                 </div>
 
+                </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 @section('scripts')
@@ -31,14 +46,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.js"></script>
     <script>
         jQuery(document).ready(function () {
+            //let video = $("#video");
+
+
+            var video = document.getElementById('video'),
+                vendorUrl = window.URL || window.webkitURL;
+            $("#start-camera").click(async function() {
+                if (navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                        .then(function (stream) {
+                            video.srcObject = stream;
+
+                        }).catch(function (error) {
+                        console.log("Something went wrong!");
+                    });
+                }
+
+
+            });
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            $("#click-photo").click(function() {
+                ctx.drawImage(video, 0, 0, 640, 480);
+                let image_data_url = canvas.toDataURL('image/jpeg');
+                resize.croppie('bind', image_data_url);
+                // data url of the image
+                console.log(image_data_url);
+            });
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-
-            var resize = $('#upload-demo').croppie({
+            var resize = $('#upload-div').croppie({
                 enableExif: true,
                 enableOrientation: true,
                 viewport: { // Default { width: 100, height: 100, type: 'square' }
@@ -83,9 +125,13 @@
                     });
                 });
             });
-        resize.croppie('bind', {
-        url: '',});
+            resize.croppie('bind', {
+                url: '/img/ww192.png',});
+
 
         });
+
+
+
     </script>
 @stop
