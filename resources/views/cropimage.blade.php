@@ -19,7 +19,7 @@
                             <a class="btn btn-primary rounded-pill" id="click-photo"><img src="/img/camera.svg"width="32"> Take Shot</a>
                         </div>
                         <div><br></div>
-                        <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+                        <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
                 <div class="text-center">
                     <div id="upload-div"></div>
                 </div>
@@ -80,7 +80,7 @@
             var ctx = canvas.getContext("2d");
 
             $("#click-photo").click(function() {
-                ctx.drawImage(video, 0, 0, 640, 480);
+                ctx.drawImage(video, 0, 0, 320, 240);
                 let image_data_url = canvas.toDataURL('image/jpeg');
                 resize.croppie('bind', image_data_url);
                 // data url of the image
