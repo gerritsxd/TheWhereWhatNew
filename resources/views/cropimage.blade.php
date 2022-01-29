@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <label  class="form-label">Take Photo</label>
                         <div class="text-center">
-                        <a class="btn btn-primary rounded-pill" id="start-camera"> Start Camera</a>
+                        <a class="btn btn-primary rounded-pill" id="start-camera" style="display: none;"> Start Camera</a>
                         </div>
                         <div class="text-center">
                             <video id="video" width="320" height="240" autoplay></video>
@@ -48,12 +48,24 @@
         jQuery(document).ready(function () {
             //let video = $("#video");
 
+            navigator.permissions.query({ name: "camera" }).then(res => {
+                if(res.state == "granted"){
+                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                        .then(function (stream) {
+                            video.srcObject = stream;
 
+                        }).catch(function (error) {
+                        console.log("Something went wrong!");
+                    });
+                }else{
+                    $('#start-camera').show();
+                }
+            });
             var video = document.getElementById('video'),
                 vendorUrl = window.URL || window.webkitURL;
             $("#start-camera").click(async function() {
                 if (navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({ video: true })
+                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
                         .then(function (stream) {
                             video.srcObject = stream;
 
