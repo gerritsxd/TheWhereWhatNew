@@ -13,13 +13,13 @@
                         <a class="btn btn-primary rounded-pill" id="start-camera" style="display: none;"> Start Camera</a>
                         </div>
                         <div class="text-center">
-                            <video id="video" width="320" height="240" autoplay></video>
+                            <video id="video" width="200" height="200" autoplay></video>
                         </div>
                         <div class="text-center">
                             <a class="btn btn-primary rounded-pill" id="click-photo"><img src="/img/camera.svg"width="32"> Take Shot</a>
                         </div>
                         <div><br></div>
-                        <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
+                        <canvas id="canvas" width="200" height="200" style="display: none;"></canvas>
                 <div class="text-center">
                     <div id="upload-div"></div>
                 </div>
@@ -80,7 +80,7 @@
             var ctx = canvas.getContext("2d");
 
             $("#click-photo").click(function() {
-                ctx.drawImage(video, 0, 0, 320, 240);
+                ctx.drawImage(video, 0, 0, 200, 200);
                 let image_data_url = canvas.toDataURL('image/jpeg');
                 resize.croppie('bind', image_data_url);
                 // data url of the image
