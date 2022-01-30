@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js?01292055') }}" defer></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nWMXuE4-LK2T2ALH6scWLhvta1B0PD0"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAj2R1yAVQxPMhf8b_x7bxVVn7jhw-b6s"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
