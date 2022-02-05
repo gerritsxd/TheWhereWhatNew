@@ -24,8 +24,7 @@ add('writable_dirs', []);
 
 // Hosts
 
-host('thewherewhat.com')
-    ->user('deployer')
+host('playaalta.com')
     ->set('deploy_path', '/var/www/thewherewhat');
     
 // Tasks

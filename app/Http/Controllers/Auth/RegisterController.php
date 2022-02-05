@@ -81,12 +81,12 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-
-        $invitation_code = new InvitationCode();
-        $invitation_code->user_id = $user->id;
-        $invitation_code->invitation_code = Str::uuid();
-        $invitation_code->save();
-
+        for ($number_of_invitations = 0 ; $number_of_invitations < 10; $number_of_invitations++){
+           $invitation_code = new InvitationCode();
+           $invitation_code->user_id = $user->id;
+           $invitation_code->invitation_code = Str::uuid();
+           $invitation_code->save();
+        }
         $used_invitation_code = InvitationCode::where('invitation_code',$data['invitation_code'])->first();
         $used_invitation_code->used = true;
         $used_invitation_code->user_id = $user->id;
