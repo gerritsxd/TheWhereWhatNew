@@ -376,139 +376,251 @@ drawTheMap = function () {
         draggableCursor: 'crosshair',
         styles: [
             {
-                "featureType": "administrative.country",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#378a00"
-                    }
-                ]
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#212121"
+                }
+              ]
             },
             {
-                "featureType": "landscape.man_made",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#998fe6"
-                    }
-                ]
+              "elementType": "labels.icon",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
             },
             {
-                "featureType": "landscape.natural",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#2c9905"
-                    }
-                ]
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#757575"
+                }
+              ]
             },
             {
-                "featureType": "landscape.natural.terrain",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#bc7906"
-                    }
-                ]
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                {
+                  "color": "#212121"
+                }
+              ]
             },
             {
-                "featureType": "poi.attraction",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#3606bc"
-                    }
-                ]
+              "featureType": "administrative",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#757575"
+                }
+              ]
             },
             {
-                "featureType": "poi.business",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#6d6d6f"
-                    }
-                ]
+              "featureType": "administrative.country",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#9e9e9e"
+                }
+              ]
             },
             {
-                "featureType": "poi.government",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#6d6d6f"
-                    }
-                ]
+              "featureType": "administrative.locality",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#bdbdbd"
+                }
+              ]
             },
             {
-                "featureType": "poi.medical",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#940025"
-                    }
-                ]
+              "featureType": "landscape.man_made",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#30a1f8"
+                },
+                {
+                  "saturation": 5
+                },
+                {
+                  "weight": 1
+                }
+              ]
             },
             {
-                "featureType": "poi.park",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#4cb625"
-                    }
-                ]
+              "featureType": "landscape.man_made",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "visibility": "on"
+                },
+                {
+                  "weight": 3.5
+                }
+              ]
             },
             {
-                "featureType": "poi.place_of_worship",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#b719c2"
-                    }
-                ]
+              "featureType": "poi",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#757575"
+                }
+              ]
             },
             {
-                "featureType": "poi.school",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#7619c2"
-                    }
-                ]
+              "featureType": "poi.medical",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#af12f8"
+                }
+              ]
             },
             {
-                "featureType": "poi.sports_complex",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#8026c9"
-                    }
-                ]
+              "featureType": "poi.medical",
+              "elementType": "labels.icon",
+              "stylers": [
+                {
+                  "color": "#f8121d"
+                }
+              ]
             },
             {
-                "featureType": "transit.station.airport",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#a8a8a8"
-                    }
-                ]
+              "featureType": "poi.park",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#12caf8"
+                }
+              ]
             },
             {
-                "featureType": "water",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#3d28e2"
-                    }
-                ]
+              "featureType": "poi.park",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "color": "#0d667d"
+                },
+                {
+                  "visibility": "on"
+                },
+                {
+                  "weight": 8
+                }
+              ]
             },
             {
-                "featureType": "poi.business",
-                "elementType": "labels",
-                "stylers": [
-                    {"visibility": "off"}
-                ]
+              "featureType": "poi.park",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#616161"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                {
+                  "color": "#1b1b1b"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.school",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#4f12f8"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#12d1f8"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "geometry.fill",
+              "stylers": [
+                {
+                  "color": "#2c2c2c"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#8a8a8a"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#12f4f8"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway.controlled_access",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#12bef8"
+                }
+              ]
+            },
+            {
+              "featureType": "road.local",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#616161"
+                }
+              ]
+            },
+            {
+              "featureType": "transit",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#757575"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#000b5c"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#3d3d3d"
+                }
+              ]
             }
-        ]
+          ]
     };
     map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
     map.addListener('click', function (e) {
