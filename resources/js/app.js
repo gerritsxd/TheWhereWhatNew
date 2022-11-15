@@ -366,6 +366,7 @@ checkGeolocation = function () {
 
 
 }
+
 drawTheMap = function () {
     var mapProp = {
         center: new google.maps.LatLng(52.364061, 4.882769),
@@ -643,3 +644,18 @@ drawTheMap = function () {
 
 
 }
+sound = function(src) {
+  this.sound = document.createElement('mapBackgroundAudio');
+  this.sound.src = src;
+  this.sound.setAttribute('preload', 'auto');
+  this.sound.setAttribute('controls', 'none');
+  this.sound.style.display = 'none';
+  document.body.appendChild(this.sound);
+  this.play = function() {
+      this.sound.play();
+  }
+    
+  };
+  window.onload = function() {
+    sound('/music/backgroundmusic.mp3');
+  }
