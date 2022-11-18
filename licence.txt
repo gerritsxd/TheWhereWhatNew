@@ -1,0 +1,23 @@
+Copyright 2021 Leopoldo Gerrit Schimmelpenninck Mosse
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+theWhereWhat is an open source project.
+What is TheWhereWhat?
+TheWhereWhat is not your average social media alternative. We do not aim to replace your regular social media apps, as our aim does not involve having you staring at your phone for hours. TheWhereWhat is a tool which can be used in many different ways.
+
+TheWhereWhat is open source in order to provide a secure experience to all users. The way the platform was programmed implies that your data will never be collected, transferred or sold by or to any third party. We aim to be as transparent and trustworthy as we possibly can. Being open source means that anyone can see how we work and it implies that anything that has to do with TheWhereWhat is for the public to see.
+
+Unlike other corporations, we do not force you to share any of your information with any third parties. Big corporations know where you are, what you’re doing and who you’re spending your time with. We bring you the opportunity to decide what you share with other internet users.
+
+Our platform intends to get rid of the well-known hierarchical system that most social media platforms follow. On TheWhereWhat, events earn popularity solely based on other user interactions and neither brands, corporations or followers play a part in this. This is crucial to who we are, as we believe all ideas must coexist in an equitable environment for the best ones to stand out. This is why the concept of being “social media famous” does not exist in our platform.
