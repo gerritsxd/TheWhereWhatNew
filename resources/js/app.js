@@ -193,7 +193,7 @@
  
  
      })
-     $('#bubbleowner').html(bubble.user.name);
+     
      $('#shareButton').click(function (e) {
          navigator.share(
              ({
