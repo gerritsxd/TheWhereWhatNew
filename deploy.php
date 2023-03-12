@@ -25,7 +25,6 @@ add('writable_dirs', []);
 // Hosts
 
 host('playaalta.com')
-    ->set('remote_user', 'vagrant')
     ->set('deploy_path', '/var/www/thewherewhat');
     
 // Tasks
