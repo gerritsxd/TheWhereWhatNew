@@ -97,8 +97,8 @@ class BubbleController extends Controller
     {
 
         $bubble = new Bubble();
-
-        $bubble->userid = $request->get('userid');
+        Log::debug($request);
+        $bubble->userid = $request->get('userid') ?? 1;
         $bubble->longitude = $request->get('long');
         $bubble->latitude = $request->get('lat');
         $bubble->title = $request->get('title');
