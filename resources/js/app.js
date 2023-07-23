@@ -241,6 +241,7 @@
     document.getElementById("BigBubble").style.display = "block";
   };
   
+  
  addMarker = function (bubble) {
  
      position = new google.maps.LatLng(bubble.longitude, bubble.latitude);
