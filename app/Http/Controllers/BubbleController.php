@@ -116,6 +116,7 @@ class BubbleController extends Controller
 
     public function getBubbles()
     {
+        $bubbles = Bubble::where('updated_at', '>', Carbon::now()->subHours(24)->toDateTimeString())->with('user')->get();
         $bubbles = Bubble::get();
         //Log::debug('bubbles:'.$bubbles[0]->user);
         return $bubbles;
