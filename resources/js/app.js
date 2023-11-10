@@ -173,43 +173,78 @@
  // }
  
  markerOnDblClick = function (bubble) {
- //marker.setMap(null);
-     activemarkerid = bubble.id;
-     map.setZoom(16);
-     map.panTo(new google.maps.LatLng(bubble.longitude, bubble.latitude));
-     map.panBy(10, -200);
-     $('#bubbletitle').html(bubble.title);
-     $('#bubbletext').html(bubble.text);
-     var imagesrc = '/storage/'+activemarkerid+'.png';
-     $.get(imagesrc)
-         .done(function() {
-             // Do something now you know the image exists.
-             $('#bubbletext').empty();
-             $('#imagediv').html('<img id="theImg" src="'+imagesrc+'" />');
- 
+    activemarkerid = bubble.id;
+    map.setZoom(16);
+    map.panTo(new google.maps.LatLng(bubble.longitude, bubble.latitude));
+    map.panBy(10, -200);
+    $('#bubbletitle').html(bubble.title);
+    $('#bubbletext').html(bubble.text);
+  
+    // Animate the map view
+    const bubblePos = new google.maps.LatLng(bubble.latitude, bubble.longitude);
+    const targetZoom = 18;
+    const targetTilt = 45;
+    const targetAngle = 45;
+    const duration = 2000;
+    const easingFunction = google.maps.Animation.Easing.Sinusoidal.InOut;
+  
+    let start = null;
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+  
+      const newZoom = easingFunction(progress / duration) * (targetZoom - map.getZoom()) + map.getZoom();
+      const newTilt = easingFunction(progress / duration) * (targetTilt - map.getTilt()) + map.getTilt();
+      const newAngle = easingFunction(progress / duration) * (targetAngle - map.getHeading()) + map.getHeading();
+  
+      map.setZoom(newZoom);
+      map.setTilt(newTilt);
+      map.setHeading(newAngle);
+  
+      const progressPercentage = progress / duration;
+      const latDiff = bubblePos.lat() - map.getCenter().lat();
+      const lngDiff = bubblePos.lng() - map.getCenter().lng();
+      const newLat = map.getCenter().lat() + latDiff * easingFunction(progressPercentage);
+      const newLng = map.getCenter().lng() + lngDiff * easingFunction(progressPercentage);
+      map.panTo(new google.maps.LatLng(newLat, newLng));
+  
+      if (progress < duration) {
+        window.requestAnimationFrame(step);
+      }
+    }
+  
+    window.requestAnimationFrame(step);
+  
+    var imagesrc = '/storage/'+activemarkerid+'.png';
+    $.get(imagesrc)
+      .done(function() {
+// Do something now you know the image exists.
+        $('#bubbletext').empty();
+        $('#imagediv').html('<img id="theImg" src="'+imagesrc+'" />');
+      
          }).fail(function() {
-         // Image doesn't exist - do something else.
-         $('#imagediv').empty();
- 
- 
-     })
+// Image doesn't exist - do something else.
+        $('#imagediv').empty();
+      
+  
+})
      $('#bubbleowner').html(bubble.user.name);
-     $('#shareButton').click(function (e) {
-         navigator.share(
-             ({
-                 title: 'Look!',
-                 text: 'Look whats happening',
-                 url: window.location.origin + '/deeplink/' + activemarkerid,
-             })
-             //'Look whats happening',window.location.origin+'/deeplink/'+(bubble.id))
+    $('#shareButton').click(function (e) {
+      navigator.share(
+        ({
+          title: 'Look!',
+          text: 'Look what\'s happening',
+          url: window.location.origin + '/deeplink/' + activemarkerid,
+        })
+      //'Look whats happening',window.location.origin+'/deeplink/'+(bubble.id))
          )
-     });
-     (userid === bubble.userid) ? $('#vote_buttons').hide() : $('#vote_buttons').show();
-     (userid === bubble.userid) ? $('#deleteButton').show() : $('#deleteButton').hide();
- 
-     document.getElementById("BigBubble").style.display = "block";
- 
- }
+    });
+      (userid === bubble.userid) ? $('#vote_buttons').hide() : $('#vote_buttons').show();
+    (userid === bubble.userid) ? $('#deleteButton').show() : $('#deleteButton').hide();
+  
+    document.getElementById("BigBubble").style.display = "block";
+  };
+  
  addMarker = function (bubble) {
  
      position = new google.maps.LatLng(bubble.longitude, bubble.latitude);

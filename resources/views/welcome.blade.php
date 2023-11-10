@@ -23,7 +23,7 @@
     </div>
     <div id="inputBigBubble" class="inputbigbubble" style="display: none;">
         <br><br><br><br><br><br>
-        <div class="bigbubbletitle">Share what's happening</div>
+        <div class="bigbubbletitle">He whats up here?</div>
         <form class="bigbubbleinputform_horizontal">
             <div class="form-group">
                 <input type="text" class="form-control bubble-input" name="bubble-title" id="bubble-title"

@@ -6,6 +6,8 @@ require 'recipe/laravel.php';
 // Project name
 set('application', 'the_where_what');
 
+set('user', 'vagrant');
+
 // Project repository
 set('repository', 'https://github.com/gerritsxd/TheWhereWhatNew.git');
 
@@ -25,6 +27,7 @@ add('writable_dirs', []);
 // Hosts
 
 host('playaalta.com')
+->user('vagrant')
     ->set('deploy_path', '/var/www/thewherewhat');
     
 // Tasks

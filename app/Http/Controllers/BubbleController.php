@@ -97,7 +97,7 @@ class BubbleController extends Controller
     {
 
         $bubble = new Bubble();
-
+        
         $bubble->userid = $request->get('userid');
         $bubble->longitude = $request->get('long');
         $bubble->latitude = $request->get('lat');
@@ -117,7 +117,7 @@ class BubbleController extends Controller
     public function getBubbles()
     {
         $bubbles = Bubble::where('updated_at', '>', Carbon::now()->subHours(24)->toDateTimeString())->with('user')->get();
-        //Log::debug('bubbles:'.$bubbles[0]->user);
+                //Log::debug('bubbles:'.$bubbles[0]->user);
         return $bubbles;
 
 
