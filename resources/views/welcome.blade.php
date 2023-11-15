@@ -91,7 +91,10 @@
 
 
         function loadBubbles() {
-            $.getJSON('/getbubbles', function (bubbles) {
+          const lat = map.getCenter().lat();
+          const long = map.getCenter().lng();
+          console.log('/getbubbles/'+lat + '/' + long)
+            $.getJSON('/getbubbles/'+lat + '/' + long, function (bubbles) {
                 loadedbubbles = bubbles;
                 prepareBubbles();
             });

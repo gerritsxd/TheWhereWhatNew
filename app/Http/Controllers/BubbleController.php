@@ -97,7 +97,7 @@ class BubbleController extends Controller
     {
 
         $bubble = new Bubble();
-        
+
         $bubble->userid = $request->get('userid');
         $bubble->longitude = $request->get('long');
         $bubble->latitude = $request->get('lat');
@@ -114,10 +114,17 @@ class BubbleController extends Controller
 
     }
 
-    public function getBubbles()
+    public function getBubbles($lat, $long)
     {
-        $bubbles = Bubble::where('updated_at', '>', Carbon::now()->subHours(24)->toDateTimeString())->with('user')->get();
-                //Log::debug('bubbles:'.$bubbles[0]->user);
+
+      $longBetween = [$lat-10, $lat+10];
+      $latBetween = [$long-10, $long+10];
+      Log::debug('lat:'.$latBetween[0].'long:'.$longBetween[0]);
+      Log::debug('lat:'.$latBetween[1].'long:'.$longBetween[1]);
+      $bubbles = Bubble::whereBetween('latitude', $latBetween)->whereBetween('longitude', $longBetween )
+        ->with('user')
+        ->latest()->take(50)->get();
+      Log::debug('bubbles:'.json_encode($bubbles));
         return $bubbles;
 
 
